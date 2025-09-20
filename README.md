@@ -1,13 +1,108 @@
 # Introduction 
-I have a client that operates a mining company in an Amazon location with `small river canoe`s and `small airplanes` as the only suitable transportation services. This geographic restriction requires my client to host its `associates` working on its mining operations for extended periods of time; it also requires my client to operate a `mercantile` with the goods and services required for their associates to have a productive and confortable `stay`.
+I have a client that operates a mining company in the heart of the Amazon, where the only suitable means of tranportation are with `small river canoes` and `small airplanes`. This geographic restriction requires my client to host its `associates` working on its mining operations for extended periods of time; it also requires my client to operate a `mercantile` with the goods and services required for their associates to have a productive and comfortable `stay`.
 
-One of their main challenges is to keep a reliable record of their associates `current accounts`, including a detailee journal of each associate `earnings` and `expenses`.
+One of their major challenges is to keep a reliable record of their associates `current accounts`, including a detailed journal of each associate's earnings and `expenses`.
 
-I will design and program version 2 of the system I wrote for a client. I built V1 using `Google Sheets` and their apps scripts programming language, a `JavaScript` ES6 without support for a few capabilities like modules and arrow functions.
+I built a software solution to assist my client with their `current accounts` difficulties; I leveraged their existing Excel solution, to write a `Google Sheets` solution, using its apps script programming language, a `JavaScript ES6 without support for a few capabilities like modules and arrow functions.
 
-The client is a mining company located in an isolated area without easy access to transportation services. As a result, it its associates cannot commute between home and work daily; this leads to a situation where the client hosts them for periods of time at their facility, including a mercantile with the goods and services required for their associates to have a confortable stay. 
+This document describes by client's business as well as the description of a more sophisticated and general software solution suitable for any prospective customers with operations similar to my client's. There are hundreds of propspective clients like this in the area.
 
-During their stay, associates earn their income working on tasks assigned to them by a planner who produces a daily cronograms 
+# Ubiquitous Language 
+This is the term Eric Evans uses in Domain Driven Design for the practice of building up a common, rigorous language between developers and users. This language should reflect the `Business Domain` and be based on the `Domain Model` used in the software - hence the need for it to be rigorous, since software doesn't cope well with ambiguity. 
+
+Following is the the Ubiquitous Language I developed for `V1`, redacted to be generic and apply for `V2`:
+
+**`active`** - a state of the associate's `stay`, the `planner` can assign work taks to them;
+
+**`affiliated`** - A state of an `associate` indicating that they remain connected with the client, even without an active `stay`;
+
+**`area`** - A generic location, within the facility, where operations relevant to the current account system take place (well, village);
+
+**`account`** - a running record of an associate's `income` and `expenditures` during a `stay` for a given `currency`; my client's associates have `accoounts` in `Real` and `Gold`;
+
+**`associate`** - an individual who has provided or provides services to the employer at its facilities; it is one of the top level `ENTITIES` in our domain;
+
+**`available credit`** - The difference between an associate's `earnings` and `expenses` for a given account;
+
+**`availability`** - an enumeration of states an associate has relative to their current `stay`; (active, time off, leave, inactive);
+
+**`commission`** - income earned based on productivity; my client's associates hired to work on its wells earned commissions, instead of fixed pay; this is based on the daily productivty of the wells they worked on, and credited to their `gold account` at the end of the day;.
+
+**`complete`** - a state of the `associate's stay`, alerting the `planner` that they associate stay ended, and that the`planner` cannot assign work taks to them;
+
+**`cronogram`** - a `work plan` for a `period`, informing `associates` of the `sites` and `tasks` they are to perform for the `period`;
+
+**`currency`** - a a medium of exchange to record an `associate's` `income` and `expenditure` during a `stay`; my client supported two currencies, `Real` and `Gold`;
+
+**`current account`** - a running record of an associate's `currency accounts'` `income` and `expenditures` during a `stay;`;
+
+**`daily pay`** - an associate's compensation, credited in their account  for their work at `the end of a work day`;
+
+**`earning`** - A generic term for various forms of compensation.
+
+**`earning`** - A quantity `earned` by an `associate` for work done at their employer's facility; at my client, this amount can be either in the `local currency`, `Real`, of in `grams of gold` based on their `commission` derived from the `well` `yields` they worked on;
+
+**`earning transaction`** - A `transaction` expressing an `associate's` earnings as the result of performing a `cronogram` `task`;
+
+**`earning potential`** - A calculation based on the `amount of time` left on an associate's current `stay` and their `remuneration` stated in their current `stay`;
+
+**`employer`** - The organization, hosting associates to working on it facilities;
+
+**`expense`** - A generic term for various forms of expenditures by an associate at the employer's merchantile.
+
+**`expenses ceiling`** - The sum of an associated `available credit` and `earning potential`, representing the maximum amount of expenses an associate might incur at a given point in time;
+
+**`expense currency`** - The currency the associate uses to pay for an expense;
+
+**`expense transaction`** - A `transaction` expressing an `associate's` `puchase` of `goods and services` at the `mercantile`; at my client, its amount can be either in the `local currency`, `Real`, of in `grams of gold` based on their `commission` derived from the `well` `yields` they worked on;
+
+**`flight`** - My client charges to fly its associates to and from it mine location;
+
+**`gold account`** - a running record of an associate's `income` and `expenditures`, in `gold`, during a `stay`;
+
+**`income`** - A generic term for various forms of compensation.
+
+**`income transaction`** - A `transaction` expressing an `associate's` earnings as the result of performing a `cronogram` `task`;
+
+**`income currency`** - The `currency` the employer used to pay for an `income transaction`;
+
+**`leave`** - A period during a `stay` when an associate is absent from work for more than one day, to attend to personal matters. Clients have rules to ensure that critical operational functions are staffed and to compensate the associates that step in; in some cases, employers also split the compensation, half and half, of the associate that took `leave` with the one who replaced them;
+
+**`license`** - a state of the `associate's stay`, alerting the `planner` that they associate took an extended timne off, and that the`planner` cannot assign work taks to them;
+
+**`mercantile`** - also known as the `canteen`, it is place where the employer's associates purchase goods and services; we opted for `mercantile` since is broader, enabling the employer to consolidade services other than providing meals;
+
+`method` - The way in which the employer compensates the associate (Daily, Weekly. Salary, Percentage, S-Percentage)
+
+**`PIX`** - My client provides a service to enable its associates to remit money (not gold) to a banch account of their choice;
+
+**`stay`** - a `period` during which an `associate` is working or has worked at the employer's operations; my client has stays that last 12 weeks, followed by at least 3 weeks off; associates in good stand with my client are invited back for new stays;
+
+**`time Off`** - a short period, `one-day to two days` during a `stay`, when an associate chooses not to work. Clients have rules to ensure that critical operational functions are staffed and to compensate the associates that step in; in some casees, employers also charge the associates who take the `time off` with the compensation of the associate who steped in for them;
+
+**`real account`** - a running record of an associate's `income` and `expenditures`, in `Real`, during a `stay`;
+
+**`salary`** - A a form of incoe paid to associates at the end of a month;
+
+`site` - A `specific area` within the employer's facility where operations relevant to the `current account` system take place; some of my client sites were canteen, cofre, well 1;
+
+**`s-percentage`** - a portion of a commission derived from daily production, my client paid an offered to pay an associate who stepped in to replace a commissioned associate who took `leave' and `work` at a critical job;
+
+**`shif`t** - a period of work within a day; often, employers operate two twelve-hour daily shifts, day and night;
+
+**`task`** - The name of the activity performed by an associtate at a location (cook, tire repairman, tractor driver, etc.);
+
+**`terminated`** - A state of an `associate` indicating that his relationship with my client has been severed;
+
+**`time off`** - a state of the associate's `stay`, alerting the `planner` that they associate took a few days off, and that the planner cannot assign the associate to any tasks;
+
+**`transaction`** - captures an atomic income or expense of interest to the current account system;
+
+**`weekly pay`** - an associate's compensation, credited in their account  for their work `at the end of a work week`;
+
+
+# Client Business Domain
+
 
 ## Good Numbers Make Good Friends
 
@@ -29,78 +124,8 @@ I'll use an [SQLite](https://sqlite.org/) database to persist the data during co
 
 I'll use [Docker](https://www.docker.com/) to containerize the `UI`, `backend`, and `database` separately.
 
-# Ubiquitous Language 
-This is the term Eric Evans uses in Domain Driven Design for the practice of building up a common, rigorous language between developers and users. This language should be based on the `Domain Model` used in the software - hence the need for it to be rigorous, since software doesn't cope well with ambiguity. 
 
-Following is the the Ubiquitous Language I developed for V1, redacted to be generic:
 
-**`active`** - a state of the associate's `stay`, the `planner` can assign work taks to them;
-
-**`affiliated`** - A state of an `associate` indicating that they remain connected with the client, even with an active `stay`;
-
-**`area`** - A generic location, within the facility, where operations relevant to the current account system take place (well, village);
-
-**`account`** - a running record of an associate's `income` and `expenditures` during a `stay` for a given `currency`; my client's associates have `accoounts` in `Real` and `Gold`;
-
-**`associate`** - an individual who has provided or provides services to the employer at its facilities; it is one of the top level `ENTITIES` in our domain;
-
-**`available credit`** - The difference between an associate's `earnings` and `expenses` for a given account;
-
-**`availability`** - an enumeration of states an associate has relative to their current `stay`; (active, time off, leave, inactive);
-
-**`commission`** - a percentage of the daily production, credited to a commissioned associate for their work at the end of the day;
-
-**`daily pay`** - an associate's compensation, credited in their account  for their work at `the end of a work day`;
-
-**`comission`** - income earned based on productivity; my client's associates hired to work on its wells earned commissions, instead of fixed pay, based on the daily productivty of the wells they worked on.
-
-**`currency`** - a a medium of exchange to record an `associate's` `income` and `expenditure` during a `stay`; my client supported two currencies, `Real` and `Gold`;
-
-**`current account`** - a running record of an associate's `currency accounts'` `income` and `expenditures` during a `stay;`;
-
-**`earning`** - A quantity `earned` by an `associate` for work done at their employer's facility; at my client, this quantiry can be either in the `local currency`, `Real`, of in `grams of gold` based on their `commission` derived from the `well` `yields` they worked on;
-
-**`earning potential`** - A calculation based on the `amount of time` left on an associate's current `stay` and their `remuneration` stated in their current `stay`;
-
-**`employer`** - The organization, hosting associates to working on it facilities;
-
-**`expenses ceiling`** - The sum of an associated `available credit` and `earning potential`, representing the maximum amount of expenses an associate might incur at a given point in time;
-
-**`folga`** - a state of the associate's `stay`, indicating that they are integrated, but took a few days of, and are unable to work at `employer` facility;
-
-**`income`** - A generic term for various forms of compensation.
-
-**`complete`** - a state of the `associate's stay`, alerting the `planner` that they associate stay ended, and that the`planner` cannot assign work taks to them;
-
-**`Leave`** - A period during a `stay` when an associate is absent from work for more than one day, to attend to personal matters. Clients have rules to ensure that critical operational functions are staffed and to compensate the associates that step in; in some cases, employers also split the compensation, half and half, of the associate that took `leave` with the one who replaced them;
-
-**`license`** - a state of the `associate's stay`, alerting the `planner` that they associate took an extended timne off, and that the`planner` cannot assign work taks to them;
-
-**`mercantile`** - also known as the `canteen`, it is place where the employer's associates purchase goods and services; we opted for `mercantile` since is broader, enabling the employer to consolidade services other than providing meals;
-
-`method` - The way in which the employer compensates the associate (Daily, Weekly. Salary, Percentage, S-Percentage)
-
-**`stay`** - a `period` during which an `associate` is working or has worked at the employer's operations; my client has stays that last 12 weeks, followed by at least 3 weeks off; associates in good stand with my client are invited back for new stays;
-
-**`time Off`** - a short period, `one-day to two days` during a `stay`, when an associate chooses not to work. Clients have rules to ensure that critical operational functions are staffed and to compensate the associates that step in; in some casees, employers also charge the associates who take the `time off` with the compensation of the associate who steped in for them;
-
-**`salary`** - A a form of incoe paid to associates at the end of a month;
-
-`site` - A `specific area` within the employer's facility where operations relevant to the `current account` system take place; some of my client sites were canteen, cofre, well 1;
-
-**`s-percentage`** - a portion of a commission derived from daily production, my client paid an offered to pay an associate who stepped in to replace a commissioned associate who took `leave' and `work` at a critical job;
-
-**`shif`t** - a period of work within a day; often, employers operate two twelve-hour daily shifts, day and night;
-
-**`task`** - The name of the activity performed by an associtate at a location (cook, tire repairman, tractor driver, etc.);
-
-**`terminated`** - A state of an `associate` indicating that his relationship with my client has been severed;
-
-**`time off`** - a state of the associate's `stay`, alerting the `planner` that they associate took a few days off, and that the planner cannot assign the associate to any tasks;
-
-**`transaction`** - captures an atomic income or expense of interest to the current account system;
-
-**`weekly pay`** - an associate's compensation, credited in their account  for their work `at the end of a work week`;
 
 # Description
 V2 will be a fast, secure, elegant, and reliable `current account` system to record a`ssociates'` `income` and `expenses` during their `stay` at the employer's facilities. It will use a sophisticated `planning` feature to plan the the associates' work that leads to them earning `income`, as well a versitile `expense` feature that enables the associate to order and pick up goods and services at the `mercantile`.
