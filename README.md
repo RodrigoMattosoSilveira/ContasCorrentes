@@ -107,26 +107,35 @@ Following is the the Ubiquitous Language I developed for `V1`, redacted to be ge
 
 ## Description
 ### Earnings
+#### Onboarding
 When onboarding an individual who is new to the organization, the `personnel manager` adds their `associate` record, setting its state as `affiliated`.  Associates work at the business' facility for a few months; we call these peridos `stays`; the detault stay length is 12 weeks. After a `stay`, an associatte takes a few weeks to rest; the default rest lenght is 3 weeks. Associates in good stead with the business remain `affiliated`, otherwise they are `terminated`.
 
 When onboarding an individual, the `personnel manager` also defines their `stay` record, setting its state as `active`; this `stay` record would be different than those of `previous stays` the associate might have had. This enable the `schedule manager` to assign work for the associate. Among other things, the `stay record` includes `date the stay started`, the `remuneration method and amount`.
 
+#### Scheduling Work
 The `schedule planner` uses the `stay` records to plan the daily work periods; the default is a daily and a nighlty periods. The `schedule planner` uses the `most recent published work plan` of the period they are planning to simplify their task; they can add or remove associates from the work plan, as well as change the locations and tasks of associates.
 
 Througout their stay, an associate can take `timeoff`, causing the `personnel manager` to update their `stay` record status to `timeoff`. This enables the `schedule planner` assign a replacement, if necessary. When a `commissioned associate` take `timeoff`, the `schedule planner` assigns a replacement among `non-commissioned` associates. The business pays the commission and the wages of both normanlly, but `charges the commissioned associate` with the `wages of the non-commissioned associate` that replaced them;
 
+#### Exceptions
 Througout their stay, a `commissioned associate` can take a `license`, causing the `personnel manager` to update their `stay` record status to `license`. This enables the `schedule planner` to assign a replacement; in this case, the business splits the  `commissioned associate`  commission with the  `non-commissioned associate` that replaced them; the default split is half and half.
 
+#### Earnings Accounting
 At the `end of a daily work period`, the `schedule planner` ensures that all `associates executed their tasks as planned`, `adjusts the plan as required`, and `records the assocciates' earning in their current accounts`.
 
 ### Expenses
 During an `associate's stay`, the business records their `earnings` and `expenses` in their `current accounts`. When an associate wishes to incur an expense, the `responsible mercantile person` checks the member’s current account to ensure that they have sufficient `available credit` or `earning potential`  to do so. This ensures a smooth closing of the member's current account at the end of their `stay`.
 
-The business supports the folling kids of expenses: a. `mercantile`, b. `PIX`, c. `flight`, d. `exchange`, e. `others`, f.` close stay`. In the case of `mercantile`, b. `PIX`, c. `flight`, d. `exchange`, e. `others`, associates with `accounts in multiple currencies` will have the option to choose the currency they wish to pay for their expense, as long as the account has enough credit to cover the expenses. In all cases the associate will have an electronic or paper copy describing the transaction.
+The business supports the folling kids of expenses:
+- `mercantile` - The `associate` can use the same `currency accont` to `purchase many items` in a `single mercantile transaction`;
+- `PIX` - This is a mechanism for an `associate` to `remit monetary currency`; the `default bank` is on his associate record
+- `flight` - The business charges the associate for the flights to and from its operating installations. The business charges the `to flight` on the first day of their `stay`. The business charges the `from flight` on the last day of their `stay`. 
+- `timeoff` - This option enables the `schedule planner` to charge the commissioned associate for the wages of the non-commussioned associate that replaced them;
+- `exchange` - The business enables `associates` with `multiple currency accounts`, to exchange `from` the `non-monetary to monetary acconts`, as long as their `non-moneraty accont` has sufficient credit.
+- ` close stay` - At the end of an associate stay, the personal manager uses the `close stay` option to summarize the credits or debits of all the ssociate's accounts, and outlining who has to pay who to close the each account. Again, at the `close stay` time, the associate will sign a document expressing their consent with the results of their stay.
 
-The `associate` can use the same `currency accont` to `purchase many items` in a `single mercantile transaction`.
+In the case of `mercantile`, b. `PIX`, c. `flight`, d. `exchange`, e. `others`, associates with `accounts in multiple currencies` will have the option to choose the currency they wish to pay for their expense, as long as the account has enough credit to cover the expenses. In all cases the associate will have an electronic or paper copy describing the transaction.
 
-At the end of an associate stay, the personal manager uses the `close stay` option to summarize the credits or debits of all the ssociate's accounts, and outlining who has to pay who to close the each account. Again, at the `close stay` time, the associate will sign a document expressing their consent with the results of their stay.
 
 # System Design
 I'll describe the software design for `V2`.
