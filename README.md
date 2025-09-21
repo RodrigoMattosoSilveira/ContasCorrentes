@@ -126,15 +126,15 @@ At the `end of a daily work period`, the `schedule planner` ensures that all `as
 ### Expenses
 During an `associate's stay`, the business records their `earnings` and `expenses` in their `current accounts`. When an associate wishes to incur an expense, the `responsible mercantile person` checks the member’s current account to ensure that they have sufficient `available credit` or `earning potential`  to do so. This ensures a smooth closing of the member's current account at the end of their `stay`.
 
-The business supports the folling kids of expenses:
-- **`mercantile`** - The `associate` can use the same `currency accont` to `purchase many items` in a `single mercantile transaction`;
-- **`PIX`** - This is a mechanism for an `associate` to `remit monetary currency`; the `default bank` is on his associate record
+The business supports the folling kidns of expenses:
+- **`mercantile`** - The `associate` can use the same `currency account` to `purchase many items` in a `single mercantile transaction`;
+- **`PIX`** - This is a mechanism for an `associate` to `remit monetary currency` to a named bank; the `default bank` is on their associate record;
 - **`flight`** - The business charges the associate for the flights to and from its operating installations. The business charges the `to flight` on the first day of their `stay`. The business charges the `from flight` on the last day of their `stay`. 
-- **`timeoff`** - This option enables the `schedule planner` to charge the commissioned associate for the wages of the non-commussioned associate that replaced them;
+- **`timeoff`** - The `schedule planner` charges the commissioned associate for the wages of the non-commussioned associate that replaced them;
 - **`exchange`** - The business enables `associates` with `multiple currency accounts`, to exchange `from` the `non-monetary to monetary acconts`, as long as their `non-moneraty accont` has sufficient credit.
-- **` close stay`** - At the end of an associate stay, the personal manager uses the `close stay` option to summarize the credits or debits of all the ssociate's accounts, and outlining who has to pay who to close the each account. Again, at the `close stay` time, the associate will sign a document expressing their consent with the results of their stay.
+- **` close stay`** - The `personnel manager` summarizes the `credits` or `debits` of all the `associate's account`, and determines  and who has to pay who to close the each account. Again, at the `close stay` time, the associate will sign a document expressing their consent with the results of their stay.
 
-In the case of `mercantile`, b. `PIX`, c. `flight`, d. `exchange`, e. `others`, associates with `accounts in multiple currencies` will have the option to choose the currency they wish to pay for their expense, as long as the account has enough credit to cover the expenses. In all cases the associate will have an electronic or paper copy describing the transaction.
+In all cases, associates with `accounts in multiple currencies` will have the option to choose the currency they wish to pay for their expense, as long as the account has enough credit to cover the expenses. In all cases the associate will have an electronic or paper copy describing the transaction.
 
 
 # System Design
