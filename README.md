@@ -1,24 +1,29 @@
 # Introduction 
 I have a client that operates a mining company in the heart of the Amazon, where the only suitable means of tranportation are with `small river canoes` and `small airplanes`. This geographic restriction requires my client to host its `associates` working on its mining operations for extended periods of time; it also requires my client to operate a `mercantile` with the goods and services required for their associates to have a productive and comfortable `stay`.
 
-One of their major challenges is to keep a reliable record of their associates `current accounts`, including a detailed journal of each associate's earnings and `expenses`.
+One of their major challenges is to keep a reliable record of their associates `current accounts`, including a detailed journal of each associate's `earnings` and `expenses`.
 
 I built a software solution to assist my client with their `current accounts` difficulties; I leveraged their existing Excel solution, to write a `Google Sheets` solution, using its apps script programming language, a `JavaScript ES6 without support for a few capabilities like modules and arrow functions.
 
-This document describes by client's business as well as the description of a more sophisticated and general software solution suitable for any prospective customers with operations similar to my client's. There are hundreds of propspective clients like this in the area.
+I decided to upgrade the solution I built for my client, `V1`, providing the same services using a faster, more reliable, elegant, and secure platform, `V2`. 
 
-# Ubiquitous Language 
+This document consists of a description of a business similar to my client's as well of a more sophisticated and general software solution suitable for any prospective customers with similar operations. There are hundreds of propspective clients like this in the area.
+
+# Business Domain
+This business domain description is and spice generic, hopefully opening the space for `V2` being suitable not only for mining, but for agricultural operations as well.
+
+## Ubiquitous Language 
 This is the term Eric Evans uses in Domain Driven Design for the practice of building up a common, rigorous language between developers and users. This language should reflect the `Business Domain` and be based on the `Domain Model` used in the software - hence the need for it to be rigorous, since software doesn't cope well with ambiguity. 
 
 Following is the the Ubiquitous Language I developed for `V1`, redacted to be generic and apply for `V2`:
 
 **`active`** - a state of the associate's `stay`, the `planner` can assign work taks to them;
 
-**`affiliated`** - A state of an `associate` indicating that they remain connected with the client, even without an active `stay`;
+**`affiliated`** - A state of an `associate` indicating that they remain connected with the organizarion, even without an active `stay`;
 
 **`area`** - A generic location, within the facility, where operations relevant to the current account system take place (well, village);
 
-**`account`** - a running record of an associate's `income` and `expenditures` during a `stay` for a given `currency`; my client's associates have `accoounts` in `Real` and `Gold`;
+**`account`** - a running record of an associate's `income` and `expenditures` during a `stay` for a given `currency`; mining companies's associates have `accoounts` in `Real` and `Gold`;
 
 **`associate`** - an individual who has provided or provides services to the employer at its facilities; it is one of the top level `ENTITIES` in our domain;
 
@@ -26,15 +31,15 @@ Following is the the Ubiquitous Language I developed for `V1`, redacted to be ge
 
 **`availability`** - an enumeration of states an associate has relative to their current `stay`; (active, time off, leave, inactive);
 
-**`commission`** - income earned based on productivity; my client's associates hired to work on its wells earned commissions, instead of fixed pay; this is based on the daily productivty of the wells they worked on, and credited to their `gold account` at the end of the day;.
+**`commission`** - income earned based on productivity; associates hired to work on wells earn commissions, instead of fixed pay; this is based on the daily productivty of the wells they worked on, and credited to their `gold account` at the end of the day;.
 
 **`complete`** - a state of the `associate's stay`, alerting the `planner` that they associate stay ended, and that the`planner` cannot assign work taks to them;
 
 **`cronogram`** - a `work plan` for a `period`, informing `associates` of the `sites` and `tasks` they are to perform for the `period`;
 
-**`currency`** - a a medium of exchange to record an `associate's` `income` and `expenditure` during a `stay`; my client supported two currencies, `Real` and `Gold`;
+**`currency`** - a a medium of exchange to record an `associate's` `income` and `expenditure` during a `stay`; mining companies have two currencies, `Real` and `Gold`;
 
-**`current account`** - a running record of an associate's `currency accounts'` `income` and `expenditures` during a `stay;`;
+**`current account`** - a running record of an associate's `currency account's` `income` and `expenditures` during a `stay;`;
 
 **`daily pay`** - an associate's compensation, credited in their account  for their work at `the end of a work day`;
 
@@ -100,18 +105,36 @@ Following is the the Ubiquitous Language I developed for `V1`, redacted to be ge
 
 **`weekly pay`** - an associate's compensation, credited in their account  for their work `at the end of a work week`;
 
+## Description
+### Earnings
+When onboarding an individual who is new to the organization, the `personnel manager` adds their `associate` record, setting its state as `affiliated`.  Associates work at the business' facility for a few months; we call these peridos `stays`; the detault stay length is 12 weeks. After a `stay`, an associatte takes a few weeks to rest; the default rest lenght is 3 weeks. Associates in good stead with the business remain `affiliated`, otherwise they are `terminated`.
 
-# Client Business Domain
+When onboarding an individual, the `personnel manager` also defines their `stay` record, setting its state as `active`; this `stay` record would be different than those of `previous stays` the associate might have had. This enable the `schedule manager` to assign work for the associate. Among other things, the `stay record` includes `date the stay started`, the `remuneration method and amount`.
 
+The `schedule planner` uses the `stay` records to plan the daily work periods; the default is a daily and a nighlty periods. The `schedule planner` uses the `most recent published work plan` of the period they are planning to simplify their task; they can add or remove associates from the work plan, as well as change the locations and tasks of associates.
+
+Througout their stay, an associate can take `timeoff`, causing the `personnel manager` to update their `stay` record status to `timeoff`. This enables the `schedule planner` assign a replacement, if necessary. When a `commissioned associate` take `timeoff`, the `schedule planner` assigns a replacement among `non-commissioned` associates. The business pays the commission and the wages of both normanlly, but `charges the commissioned associate` with the `wages of the non-commissioned associate` that replaced them;
+
+Througout their stay, a `commissioned associate` can take a `license`, causing the `personnel manager` to update their `stay` record status to `license`. This enables the `schedule planner` to assign a replacement; in this case, the business splits the  `commissioned associate`  commission with the  `non-commissioned associate` that replaced them; the default split is half and half.
+
+At the `end of a daily work period`, the `schedule planner` ensures that all `associates executed their tasks as planned`, `adjusts the plan as required`, and `records the assocciates' earning in their current accounts`.
+
+### Expenses
+During an `associate's stay`, the business records their `earnings` and `expenses` in their `current accounts`. When an associate wishes to incur an expense, the `responsible mercantile person` checks the member’s current account to ensure that they have sufficient `available credit` or `earning potential`  to do so. This ensures a smooth closing of the member's current account at the end of their `stay`.
+
+The business supports the folling kids of expenses: a. `mercantile`, b. `PIX`, c. `flight`, d. `exchange`, e. `others`, f.` close stay`. In the case of `mercantile`, b. `PIX`, c. `flight`, d. `exchange`, e. `others`, associates with `accounts in multiple currencies` will have the option to choose the currency they wish to pay for their expense, as long as the account has enough credit to cover the expenses. In all cases the associate will have an electronic or paper copy describing the transaction.
+
+The `associate` can use the same `currency accont` to `purchase many items` in a `single mercantile transaction`.
+
+At the end of an associate stay, the personal manager uses the `close stay` option to summarize the credits or debits of all the ssociate's accounts, and outlining who has to pay who to close the each account. Again, at the `close stay` time, the associate will sign a document expressing their consent with the results of their stay.
+
+# System Design
+I'll describe the software design for `V2`.
 
 ## Good Numbers Make Good Friends
-
-With V1, the client wanted to update its process for recording the income and expenses, `current accounts`, of its associates to ensure a simple and reliable experience in settling their current accounts upon their departure.
-
-V1 also aimed to improve the quality and transparency of MC associates' expenses transactions at its canteen. 
+With `V1`, my client wanted to update its process for recording the income and expenses, `current accounts`, transactions of its associates to ensure a simple and reliable experience in settling their current accounts upon their departure. Furthermore, `V1` also aimed to improve the quality and transparency of MC associates' expenses transactions at its canteen. 
 
 ## Faster, Better, More Elegant and Reliable
-
 V2 goal is to provide the same services using a faster, more reliable, elegant, and secure platform. 
 
 I'll build a multi user solution that can be deployed on the cloud or a local server. 
@@ -198,7 +221,7 @@ The first step is to includes only associates with `active stays` (the responsib
 
 
 
-
+kdskdkdkdkd
 
 
 
