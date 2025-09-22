@@ -25,7 +25,7 @@ Following is the the Ubiquitous Language I developed for `V1`, redacted to be ge
 
 **`account`** - a running record of an associate's `income` and `expenditures` during a `stay` for a given `currency`; mining companies's associates have `accoounts` in `Real` and `Gold`;
 
-**`associate`** - an individual who has provided or provides services to the employer at its facilities; it is one of the top level `ENTITIES` in our domain;
+**`associate`** - an individual who has provided or provides services to the employer at its facilities; it is one of the top level `ENTITIES` in our domain; 
 
 **`available credit`** - The difference between an associate's `earnings` and `expenses` for a given account;
 
@@ -35,11 +35,11 @@ Following is the the Ubiquitous Language I developed for `V1`, redacted to be ge
 
 **`complete`** - a state of the `associate's stay`, alerting the `planner` that they associate stay ended, and that the`planner` cannot assign work taks to them;
 
-**`cronogram`** - a `work plan` for a `period`, informing `associates` of the `sites` and `tasks` they are to perform for the `period`;
+**`cronogram`** - a `work plan` for a `period`, informing `associates` of the `sites` and `tasks` they are to perform for the `period`; its workflow is: 1. Model, 2. Plan, 3. Inform, 4. Account
 
 **`currency`** - a a medium of exchange to record an `associate's` `income` and `expenditure` during a `stay`; mining companies have two currencies, `Real` and `Gold`;
 
-**`current account`** - a running record of an associate's `currency account's` `income` and `expenditures` during a `stay;`;
+**`current account`** - a running record of an associate's `earnings` and `expenses` for all of their `currency acccouts`;
 
 **`daily pay`** - an associate's compensation, credited in their account  for their work at `the end of a work day`;
 
@@ -81,19 +81,19 @@ Following is the the Ubiquitous Language I developed for `V1`, redacted to be ge
 
 **`PIX`** - My client provides a service to enable its associates to remit money (not gold) to a banch account of their choice;
 
-**`stay`** - a `period` during which an `associate` is working or has worked at the employer's operations; my client has stays that last 12 weeks, followed by at least 3 weeks off; associates in good stand with my client are invited back for new stays;
-
 **`time Off`** - a short period, `one-day to two days` during a `stay`, when an associate chooses not to work. Clients have rules to ensure that critical operational functions are staffed and to compensate the associates that step in; in some casees, employers also charge the associates who take the `time off` with the compensation of the associate who steped in for them;
 
 **`real account`** - a running record of an associate's `income` and `expenditures`, in `Real`, during a `stay`;
 
 **`salary`** - A a form of incoe paid to associates at the end of a month;
 
-`site` - A `specific area` within the employer's facility where operations relevant to the `current account` system take place; some of my client sites were canteen, cofre, well 1;
+**`site`** - A `specific area` within the employer's facility where operations relevant to the `current account` system take place; some of my client sites were canteen, cofre, well 1;
 
 **`s-percentage`** - a portion of a commission derived from daily production, my client paid an offered to pay an associate who stepped in to replace a commissioned associate who took `leave' and `work` at a critical job;
 
-**`shif`t** - a period of work within a day; often, employers operate two twelve-hour daily shifts, day and night;
+**`shift`** - a period of work within a day; often, employers operate two twelve-hour daily shifts, day and night;
+
+**`stay`** - a `period` during which an `associate` is working or has worked at the employer's operations; the default is 12 weeks, followed by at least 3 weeks off; associates in good stand are invited back for new `stays`;
 
 **`task`** - The name of the activity performed by an associtate at a location (cook, tire repairman, tractor driver, etc.);
 
@@ -127,24 +127,40 @@ At the `end of a daily work period`, the `schedule planner` ensures that all `as
 During an `associate's stay`, the business records their `earnings` and `expenses` in their `current accounts`. When an associate wishes to incur an expense, the `responsible mercantile person` checks the member’s current account to ensure that they have sufficient `available credit` or `earning potential`  to do so. This ensures a smooth closing of the member's current account at the end of their `stay`.
 
 The business supports the folling kidns of expenses:
-- **`mercantile`** - The `associate` can use the same `currency account` to `purchase many items` in a `single mercantile transaction`;
-- **`PIX`** - This is a mechanism for an `associate` to `remit monetary currency` to a named bank; the `default bank` is on their associate record;
-- **`flight`** - The business charges the associate for the flights to and from its operating installations. The business charges the `to flight` on the first day of their `stay`. The business charges the `from flight` on the last day of their `stay`. 
+- **`mercantile`** - The `associate` can use the same `currency account` to `purchase many items` in a `single mercantile transaction` the application ensures the associate has the required credit, the `mercantile associate` delivers the purchased goods;
+- **`PIX`** - This is a mechanism for an `associate` to `remit monetary currency` to a named bank; the `default bank` is on their associate record; the application ensures the associate has the required credit, the `mercantile manager` assists with the remitance; perhaps the system can accomplish this automatically;
+- **`flight`** - The business charges the associate for the flights to and from its operating installations. The business charges the `to flight` on the first day of their `stay`. The business charges the `from flight` on the last day of their `stay`; the `personnel manager` performs both operations; 
 - **`timeoff`** - The `schedule planner` charges the commissioned associate for the wages of the non-commussioned associate that replaced them;
-- **`exchange`** - The business enables `associates` with `multiple currency accounts`, to exchange `from` the `non-monetary to monetary acconts`, as long as their `non-moneraty accont` has sufficient credit.
+- **`exchange`** - The business enables `associates` with `multiple currency accounts`, to exchange `from` the `non-monetary to monetary acconts`, as long as their `non-moneraty accont` has sufficient credit; the application ensures the associate has the required credit, the `mercantile manager` assists with the operation; 
 - **` close stay`** - The `personnel manager` summarizes the `credits` or `debits` of all the `associate's account`, and determines  and who has to pay who to close the each account. Again, at the `close stay` time, the associate will sign a document expressing their consent with the results of their stay.
 
 In all cases, associates with `accounts in multiple currencies` will have the option to choose the currency they wish to pay for their expense, as long as the account has enough credit to cover the expenses. In all cases the associate will have an electronic or paper copy describing the transaction.
 
+### Cronograms
+The work planning feature assigns associates to their daily functions, records the work they performed, and documents their earnings as a result of this work in their current accounts. It guides the associates to perform the necessary work so that they earn their credits in their current accounts. It consists of the following steps: 1. Model, 2. Plan, 3. Inform, 4. Account
+
+#### Model
+The first step is to includes only associates with `active stays` (the responsible member updates a member's stay to Inactive at the time of closing their current account).
+
+The `schedule planner` uses the `active stay` records to plan the daily work periods; the default is a `daily` and a `nighlty` periods. The `schedule planner` uses the `most recent published work plan` for the period they are planning to simplify their task; they can add or remove associates from the work plan, as well as change the locations and tasks of associates.
+
+#### Plan
+The `schedule planner` refines the plan to account for associates who took timeoff or licenses, or any other operation requirement for the period they are planning.
+
+#### Inform
+The `schedule planner` informs the associates of their next period assignments.
+
+#### Account
+The `schedule planner` refines the record of the work performed for the period and triggers the addition of the associates' `earnings transactions`.
 
 # System Design
 I'll describe the software design for `V2`.
 
 ## Good Numbers Make Good Friends
-With `V1`, my client wanted to update its process for recording the income and expenses, `current accounts`, transactions of its associates to ensure a simple and reliable experience in settling their current accounts upon their departure. Furthermore, `V1` also aimed to improve the quality and transparency of MC associates' expenses transactions at its canteen. 
+With `V1`, my client wanted to update its process for recording the income and expenses, `current accounts`, transactions of its associates to ensure a simple and reliable experience in settling their current accounts upon their departure. Furthermore, `V1` also aimed to improve the quality and transparency of associates' expenses at the canteen. 
 
 ## Faster, Better, More Elegant and Reliable
-V2 goal is to provide the same services using a faster, more reliable, elegant, and secure platform. 
+V2 goal is to provide a superset of services using a faster, more reliable, elegant, and secure platform. 
 
 I'll build a multi user solution that can be deployed on the cloud or a local server. 
 
@@ -156,45 +172,129 @@ I'll use an [SQLite](https://sqlite.org/) database to persist the data during co
 
 I'll use [Docker](https://www.docker.com/) to containerize the `UI`, `backend`, and `database` separately.
 
+## Actors
+These actors identify the roles and authorizarions that the system will support:
+- **`system administrator`** - Individual with credentials to perform all system operations;
+- **`associate`** - Contracted by the business to work at its facilities, can view their current accounts, and initiate `expense` activities;
+- **`mercantile associate`** - Receives notifications of `action required` about `expense requests`, assists in delivering `mercantile` items for `approved expenses`;
+- **`mercantile manager`** - Receives notifications of `action required` about `PIX, exxchange requests`, assists in completing the approved expenses`;
+- **`personnel manager`** - `Onboards associates`, ensures their `associate and stay records` are correct, `closes the associate stay`;
+- **`schedule planer`** - Prepares the `daily work assignments`, inform associates of their `assignments`, and `records the associates earnings` in the `current accounts`;
 
+## DDD
+### Entities
+- Associate
+- Account
+- Stay
+- Price List
+- Mercantile Item
+- Mercantile Item Price
 
+### Value Objects
+- Account Type (derived from currencies)
+- Area (configurable: Mercantile, Village, Office)
+- Affilication (afiliated, terminated)
+- Availability (active, timeoff, license, complete)
+- Address (Residence, Emergency)
+- Bank
+- Cell Phone (Personal, Emergency)
+- Currency (configurable: Real, Gold)
+- Earning (transaction)
+- Email  (Personal, Emergency)
+- Expense (transaction)
+- Flight (Date, Airline Flight, From, To, time departure, time arrival)
+- Location (configurable)
+- Payment Methodo (configurable: daily pay, weekly pay, salary, commission)
 
-# Description
-V2 will be a fast, secure, elegant, and reliable `current account` system to record a`ssociates'` `income` and `expenses` during their `stay` at the employer's facilities. It will use a sophisticated `planning` feature to plan the the associates' work that leads to them earning `income`, as well a versitile `expense` feature that enables the associate to order and pick up goods and services at the `mercantile`.
+### Services
+- **`Associate`**:
+  - The `personnel manager` triggers the creation of the` associate`; 
+  - Authorized actors read the associate records;
+  - The `personnel manager` can update the associate records;; 
+  - The system never deletes `associates`; it updates its state (inactive, terminated), and it sets a delete date which can be revoked in special circunstances;
+- **`Account`**:
+  - The `personnel manager` triggers the creation of the `account`; `an associate must have one monetary account`; 
+  - authorized actors read the associates accounts, as for instance the `mercantile manager`; 
+  - The system updates accoungs via `earnings and expenses transactions`; 
+  - The system never deletes `accounts`; it updates their state (inactive, terminated), and it sets a delete date which can be revoked in special circunstances;
+- **`Stay`**:
+  - The `personnel manager` triggers the creation of the `stay`;
+  - Authorized personnel read them;
+  - The `personnel manager` updates them;
+  - The system never deletes a `stay`; it sets its `state` as `complete`, and the `delete` date which can be revoked in special circunstances;
+- **`Price List`**
+  -  The `mercantile manager` triggers the creation of the `price list`;
+  -  Anyone can read the `price list`
+  -  The `mercantile manager` updates the `price list`;
+  -  The system never deletes a `price list`; it sets its `state` as `discontinued`, and the `delete` date which can be revoked in special circunstances;
+-  **`Mercantile Item`**
+  -  The `mercantile manager` triggers the creation of the `mercantile item`;
+  -  The `system` reads the `mercantile item` when showing the `price list`; the ;
+  -  The `mercantile manager` updates the `mercantile item`;
+  -  The system never deletes a`mercantile item`; it sets its `state` as `discontinued`, and the `delete` date which can be revoked in special circunstances;
+-  **`Mercantile Item Price`**
+  -  The `mercantile manager` triggers the creation of the `mercantile item`;
+  -  The `system` reads the `mercantile item price` when showing the `mercantile item `; the ;
+  -  The `mercantile manager` updates the `mercantile item price`;
+  -  The system never deletes a`mercantile item price`; it sets its `state` as `discontinued`, and the `delete` date which can be revoked in special circunstances;
+- **`Area`** (configurable: Mercantile, Village, Office)
+  - The `system administrator` configures the `areas` of interest in the facility;
+  - The `system` reads and attaches to records that require them as a characteristic; 
+  - The `system administrator` does not update them;
+  - The `system administrator` marks them as read only for existing assignments, and to be ignored in any future assignments;
+- **`Affilication`** (afiliated, terminated) - These are defined at system configuration time and never changed;
+- **`Availability`** (active, timeoff, license, complete) - These are defined at system configuration time and never changed;
+- **`Address`** (Residence, Emergency)
+  - The `personnel manager` configures new `address`;
+  - An `associate` can read their own `email`; the the `mercantile manager`  and `personnel manager` can read all associates' `emails`;
+  - The `associate` triggers the update of an `address`;
+  - The system never deletes a`address`, although an `associate` might remove it leaving the address without any references;
+- **`Bank`**
+  - The `personnel manager` configures new `bank`;
+  - The `system` reads and shows `bank`;
+  - The `associate` triggers the update of a `bank`;
+  - The system never deletes a`bank`, although an `bank` might remove it leaving the address without any references;
+- **`Cell Phone`** (Personal, Emergency)
+  - The `personnel manager` configures new `Cell Phone`;
+  - An `associate` can read their own `email`; the the `mercantile manager`  and `personnel manager` can read all associates' `emails`;
+  - The `associate` triggers the update of a `Cell Phone`;
+  - The system never deletes a`Cell Phone`, although an `Cell Phone` might remove it leaving the address without any references;
+- **`Currency`** (configurable: Real, Gold)
+  - The `personnel manager` configures new `Cell Phone`;
+  - The `system` reads and shows `currency`;
+  - The `personnel manager` triggers the update of a `personnel manager`;
+  - The system never deletes a`personnel manager`, although an `personnel manager` might remove it leaving the address without any references;
+- **`Earning`** (transaction)
+  - The `schedule planner` trigger the generation of a new `earning` transaction;
+  - An `associate` can read their own `earning` transactions; the `mercantile manager` and `personnel manager` can read all associates' `earning` transactions;
+  - No one can update an `earning`transaction;
+  - No one can delete an `earning` transaction;
+- **`Email`**  (Personal, Emergency)
+  - The `personnel manager` configures new `email`;
+  - An `associate` can read their own `email`; the the `mercantile manager`  and `personnel manager` can read all associates' `emails`;
+  - The `associate` triggers the update of an `email`;
+  - The system never deletes an `email`, although an `email` might remove it leaving the address without any references;
+- **`Expense`** (transaction)
+  - The `associate` triggers the generation of a new `expense` transaction;
+  - An `associate` can read their own `expense` transactions; the `mercantile manager`  and `personnel manager` can read all associates' `expense` transactions;
+  - No one can update an `expense`transaction;
+  - No one can delete an `expense` transaction;
+- **`Flight`** (Date, Airline Flight, From, To, time departure, time arrival)
+  - The `personnel manager` configures new `flight`;
+  - An `associate` can read their own `flights`; the the `mercantile manager`  and `personnel manager` can read all associates' `flights`;
+  - The `personnel manager` triggers the update of an `flights`;
+  - The system never deletes an `flights`, although an `flights` might remove it leaving the address without any references;
+- **`Location`** (configurable)
+  - The `system administrator` configures the `locations` of interest in the facility;
+  - The `system` reads and attaches to records that require them as a characteristic; 
+  - The `system administrator` does not update them;
+  - The `system administrator` marks them as read only for existing assignments, and to be ignored in any future assignments;
+- **`Payment`** Methodo (configurable: daily pay, weekly pay, salary, commission)
+  - The `personnel manager` configures new `payment` method;
+  - An `associate` can read their own `payment` method; the the `mercantile manager`  and `personnel manager` can read all associates' `payment` methods;
+  - The  `personnel manager` or the `schedule planner` triggers the update of a `payment` method;
+  - The system never deletes a`address`, although an `associate` might remove it leaving the address without any references;
 
-## Associates
-Individuals working at the employer's facilities. The administrator adds and updates `associates` records as needed. `Associate` records are permanent and are never deleted; associates no longer involved with the employer have their `deleted` set;
-
-### Stay
-Associates work at the employer's facilities for mutually agreed periods-- twelve weeks in V1, configuragle in V2--, called `stays`, after which they return to their residences for a mutually agreed period-- three weeks in V1, configuragle in V2. When an associate begins their `stay`, if necessary, the administrator updates their associate record, and then creates a new `stay` record for the associate. The `stay` record establishes the `method`, `area`, `location`, `task`, as well as the `compensation` for the associate's` stay`. The system allows planner to adjust them as needed. The system provides mechanisms to alert planners and managers of associates with stays about to expire.
-
-## Current Accounts
-The employer's associates earn `Income` as a result of their work in their facilities. They incur `Expenses` when purchasing goods and services at the `mercantile`. The system supports associates having multiple current accounts, one for each tipe of income (hard corrency, gold, etc.)
-
-### Incomes
-The employer's associates derive their income from performing work outlined on theiry daily `work plans`, see ahead for more details. The proposed system supports three ways for Carará Mining to pay its associates: i. daily, ii. salary, commission.
-
-#### Daily
-The system credits the earnings received by the associates earning daily pay on their current account, in the currendy specificed in their `stay`, at the end of their work periods.
-
-#### Salary
-The system credits the earnings received by the associates earning salaries on their current account, in the currendy specificed in their `stay`, on the last day of the month, at the end of their work period.
-
-#### Commission
-The system credits the earnings received by the associates earning commission on their current account, in the currendy specificed in their `stay`, at the end of their work periods; thisd is predicated on the employer have recorded the basis upon which the system calculates the commission; otherwise, the sytem keeps the transaction in a wainting state;
-
-### Expenses
-During an associate's `stay`, the employer records its revenues and expenses in their current account. 
-When an associate places and `expense` order, the employers' responsible person checks the associate’s current account to ensure that they have sufficient `available credit` or `earning potential` during this stay to do so; the sum of both defines the `ceiling of expenses` allowed for the associated at any point in timne. This ensures a smooth closing of the member's current account at the end of their stay. 
-
-## Work Plans
-The work planning feature assigns associates to their daily functions, record the work they performed, and document their earnings as a result of this work in their current accounts. It guides the associates to perform the necessary work so that they earn their credits in their current accounts. It consists of the following steps: 1. Model, 2. Plan, 3. Inform, 4. Account
-
-#### Model
-The first step is to includes only associates with `active stays` (the responsible member updates a member's stay to Inactive at the time of closing their current account).
-#### Plan
-#### Inform
-#### Account
 
 # Lost and Found
 ## Ubiquotous Language
