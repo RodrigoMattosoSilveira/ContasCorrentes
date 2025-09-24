@@ -164,7 +164,7 @@ V2 goal is to provide a superset of services using a faster, more reliable, eleg
 
 I'll build a multi user solution that can be deployed on the cloud or a local server. 
 
-It will use a mobile first UI driving by [the golang template engine](https://golangdocs.com/templates-in-golang) driving [HTMX templates](https://htmx.org/), supported by [GIN routes](https://github.com/gin-gonic/gin) enabling using [Golang Gin JWT](https://github.com/appleboy/gin-jwt) to allow `credentialized actors` to operate the parts of the system they are `authorized` .
+It will use a mobile first UI based on the [the golang template engine](https://golangdocs.com/templates-in-golang) driving [HTMX templates](https://htmx.org/), supported by [GIN routes](https://github.com/gin-gonic/gin) enabling using [Golang Gin JWT](https://github.com/appleboy/gin-jwt) to allow `credentialized actors` to operate the parts of the system they are `authorized` .
 
 
 I'll use a `Domain Driven Design` pattern to build the backend using [golang](https://go.dev/), [GIN](https://gin-gonic.com/), [`RuleGo`](https://github.com/rulego/rulego), and [GORM](https://gorm.io/).
