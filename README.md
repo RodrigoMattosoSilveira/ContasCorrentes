@@ -164,11 +164,12 @@ V2 goal is to provide a superset of services using a faster, more reliable, eleg
 
 I'll build a multi user solution that can be deployed on the cloud or a local server. 
 
-It will include a mobile first UI using [TypeScript](https://www.typescriptlang.org/) and [React](https://react.dev/), enabling `credentialized actors` to operate the parts of the system they are `authorized`.
+It will use a mobile first UI driving by [the golang template engine](https://golangdocs.com/templates-in-golang) driving [HTMX templates](https://htmx.org/), supported by [GIN routes](https://github.com/gin-gonic/gin) enabling using [Golang Gin JWT](https://github.com/appleboy/gin-jwt) to allow `credentialized actors` to operate the parts of the system they are `authorized` .
+
 
 I'll use a `Domain Driven Design` pattern to build the backend using [golang](https://go.dev/), [GIN](https://gin-gonic.com/), [`RuleGo`](https://github.com/rulego/rulego), and [GORM](https://gorm.io/).
 
-I'll use an [SQLite](https://sqlite.org/) database to persist the data during constrution, and migrate to [PostGress](https://www.postgresql.org/) to go to production.
+I'll use an [SQLite](https://sqlite.org/) database to persist the data during constrution. I might migrate to [PostGress](https://www.postgresql.org/) to go to production.
 
 I'll use [Docker](https://www.docker.com/) to containerize the `UI`, `backend`, and `database` separately.
 
