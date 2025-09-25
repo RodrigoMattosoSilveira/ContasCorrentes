@@ -1,6 +1,8 @@
 package users
 
 import (
+	"log"
+
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/validator"
 
 	"github.com/gofiber/fiber/v2"
@@ -31,6 +33,7 @@ func (uc *UsersController) ListUsers(c *fiber.Ctx) error {
 
 func (uc *UsersController) AddUser(c *fiber.Ctx) error {
 	var user User
+	log.Println("Adding user")
 	if err := c.BodyParser(&user); err != nil {
 		return c.Status(400).SendString("Invalid user data")
 	}

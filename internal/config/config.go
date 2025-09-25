@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"github.com/joho/godotenv"
 )
@@ -17,7 +18,7 @@ type Config struct {
 func LoadConfig() (*Config, error) {
 	if os.Getenv("APP_ENV") != "production" {
 		if err := godotenv.Load(); err != nil {
-			// It's okay if .env doesn't exist
+			log.Println("Error loading .env file")
 		}
 	}
 

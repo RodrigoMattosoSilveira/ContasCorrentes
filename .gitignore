@@ -82,9 +82,14 @@ coverage.txt
 # Ignore go test cache
 /test/
 
+# Ignore go temp files
+tmp/
+tmp/main
+
 # Ignore environmental configuration files
 .env
 *.env
 
 # // 追記
 /yarn.lock
+tmp/main
