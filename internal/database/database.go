@@ -6,7 +6,7 @@ import (
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/config"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/users"
 
-	"github.com/glebarez/sqlite"
+	"gorm.io/driver/sqlite"
 	"fmt"
 	"gorm.io/gorm"
 	"log/slog"
