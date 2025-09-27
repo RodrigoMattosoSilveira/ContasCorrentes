@@ -93,3 +93,6 @@ tmp/main
 # // 追記
 /yarn.lock
 tmp/main
+fiber.sqlite3
+cmd/web/fiber.sqlite3
+
