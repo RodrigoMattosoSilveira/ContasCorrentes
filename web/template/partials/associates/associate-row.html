@@ -1,0 +1,16 @@
+<tr id="associate-{{ .ID }}">
+    <td>{{ .ID }}</td>
+    <td>{{ .Name }}</td>
+    <td>{{ .Email }}</td>
+    <td>
+        <button 
+            class="btn-delete"
+            hx-delete="/associates/{{ .ID }}"
+            hx-target="#associate-{{ .ID }}"
+            hx-swap="outerHTML"
+            hx-confirm="Are you sure you want to delete this associate?"
+        >
+            Delete
+        </button>
+    </td>
+</tr>

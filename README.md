@@ -329,5 +329,6 @@ These actors identify the roles and authorizarions that the system will support:
 
 # Links
 [Client-side form validation](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation)
-
-
+[HTMX](https://htmx.org/docs/)
+[Bootstrap forms](https://getbootstrap.com/docs/5.3/forms/layout/)
+[Bootstrap Icons](https://icons.getbootstrap.com/)
