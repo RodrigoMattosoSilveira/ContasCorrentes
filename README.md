@@ -327,6 +327,7 @@ These actors identify the roles and authorizarions that the system will support:
 
 **`Well`** - an area where associates perform tasks to extract gold; the employer currently operates x week;
 
-
+# Links
+[Client-side form validation](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation)
 
 

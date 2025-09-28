@@ -4,19 +4,21 @@ import (
 	"log"
 
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/config"
+	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/associates"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/users"
 
-	"gorm.io/driver/sqlite"
 	"fmt"
-	"gorm.io/gorm"
 	"log/slog"
 	"os"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func InitDatabase(cfg *config.Config) (*gorm.DB, error) {
 	dbName := os.Getenv("DB_NAME")
 	if dbName == "" {
-		panic(fmt.Sprintf("DBInit: Invalid DB_NAME environment%svariable", " "))
+		panic(fmt.Sprintf("DBInit: Invalid DB_NAME environment %s variable", dbName))
 	}
 
 	db, err := gorm.Open(sqlite.Open(dbName), &gorm.Config{})
@@ -31,6 +33,10 @@ func InitDatabase(cfg *config.Config) (*gorm.DB, error) {
 func RunMigrations(db *gorm.DB) error {
 	log.Println("Running database migrations...")
 	err := db.AutoMigrate(&users.User{})
+	if err != nil {
+		return err
+	}
+	err = db.AutoMigrate(&associates.Associate{})
 	if err != nil {
 		return err
 	}

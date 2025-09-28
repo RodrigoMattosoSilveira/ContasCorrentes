@@ -31,9 +31,6 @@ dist/
 out/
 build/
 
-# Ignore environment files
-.env*
-
 # Ignore VSCode settings
 .vscode/
 
@@ -85,10 +82,6 @@ coverage.txt
 # Ignore go temp files
 tmp/
 tmp/main
-
-# Ignore environmental configuration files
-.env
-*.env
 
 # // 追記
 /yarn.lock

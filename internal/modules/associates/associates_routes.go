@@ -9,9 +9,9 @@ func RegisterRoutes(router fiber.Router, db *gorm.DB) {
 	service := NewAssociatesService(db)
 	controller := NewAssociatesController(service)
 
-	usersGroup := router.Group("/associates")
+	group := router.Group("/associates")
 
-	usersGroup.Get("/", controller.ListAssociates)
-	usersGroup.Post("/", controller.addAssociate)
-	usersGroup.Delete("/:id", controller.DeleteAssociate)
+	group.Get("/", controller.ListAssociates)
+	group.Post("/", controller.addAssociate)
+	group.Delete("/:id", controller.DeleteAssociate)
 }
