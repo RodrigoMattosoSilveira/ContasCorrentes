@@ -6,8 +6,8 @@
         <h3>Add New Associate</h3>
         <form 
 			class="form-inline"
-            hx-post="/users" 
-            hx-target="#user-table-body" 
+            hx-post="/associates" 
+            hx-target="#associate-table-body" 
             hx-swap="afterbegin"
             hx-on::after-request="if(event.detail.successful) this.reset()"
         >
@@ -15,17 +15,17 @@
             <input type="hidden" name="gorilla.csrf.Token" value="{{ .CSRFToken }}">
 
 			<!-- label class="sr-only" for="inlineFormInpuFirstName">FistName</label -->
-			<input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInpuFirstName" placeholder="First Name" name="first_name" required>
+			<input type="text" class="form-control mb-2 mr-sm-2" id="first" placeholder="First Name" name="first" required minlength="2">
 
 			<!-- label class="sr-only" for="inlineFormInpuLastName">LastName</label -->
-			<input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInpuLastName"  placeholder="Last Name"  name="last_name"  required>
-
+			<input type="text" class="form-control mb-2 mr-sm-2" id="last"  placeholder="Last Name"  name="last" required minlength="2">
+required minlength="2"
 			<!-- label class="sr-only" for="inlineFormInputGroupEmail">Email</label -->
 			<div class="input-group mb-2 mr-sm-2">
 				<div class="input-group-prepend">
 					<div class="input-group-text">@</div>
 				</div>
-				<input type="text" class="form-control" id="inlineFormInputGroupEmail" placeholder="Email" name="email" required>
+				<input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required minlength="4">
 			</div>
 
 			<!-- label class="sr-only" for="inlineFormInputGroupCell">Cell</label -->
@@ -36,13 +36,13 @@
 						<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
 					</svg>
 				</span>
-				<input type="text" class="form-control" id="inlineFormInputGroupCell" placeholder="Cell" aria-label="Cell" aria-describedby="basic-addon1">
+				<input type="text" class="form-control" id="cell" placeholder="Cell" name="cell" aria-label="Cell" aria-describedby="basic-addon1" required required minlength="9" maxlength="9">
 			</div>
 
 			<!-- label class="sr-only" for="inlineFormInpuLastName">Password</label -->
 			<div class="mb-3">
 				<!-- label class="form-label" for="exampleForm.ControlInput1">Email address</label -->
-				<input type="email" class="form-control" id="inlineFormInputGroupEmail" placeholder="name@example.com"  aria-describedby="basic-addon1">
+				<input type="text" class="form-control" id="inlineFormInputGroupEmail" placeholder="password"   name="password" aria-describedby="basic-addon1" required>
 				<small class="text-muted form-text">8-20 characters long, at least one letters, number, special characters; no spaces nor emojis.</small>
 			</div>
 
