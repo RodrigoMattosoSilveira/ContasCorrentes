@@ -5,7 +5,6 @@
     <div class="card">
         <h3>Add New Associate</h3>
         <form 
-			class="form-inline"
             hx-post="/associates" 
             hx-target="#associate-table-body" 
             hx-swap="afterbegin"
@@ -62,13 +61,15 @@
     </div>
 
     <h3>Existing Associates</h3>
-    <table class="associate-table">
+    <!-- table class="associate-table" -->
+	<table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <th>First</th>
+                <th>Last</th>
                 <th>Email</th>
-                <th>Actions</th>
+				<th>Cell</th>
+				<th>Actions</th>
             </tr>
         </thead>
         <tbody id="associate-table-body">
