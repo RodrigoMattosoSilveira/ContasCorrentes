@@ -12,6 +12,6 @@ func RegisterRoutes(router fiber.Router, db *gorm.DB) {
 	group := router.Group("/associates")
 
 	group.Get("/", controller.ListAssociates)
-	group.Post("/", controller.addAssociate)
+	group.Post("/", controller.AddAssociate)
 	group.Delete("/:id", controller.DeleteAssociate)
 }

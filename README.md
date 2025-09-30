@@ -332,3 +332,4 @@ These actors identify the roles and authorizarions that the system will support:
 [HTMX](https://htmx.org/docs/)
 [Bootstrap forms](https://getbootstrap.com/docs/5.3/forms/layout/)
 [Bootstrap Icons](https://icons.getbootstrap.com/)
+[Form Controls for Mobiles](https://phoenix-react-alt.prium.me/modules/forms/form-control)

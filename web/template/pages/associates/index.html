@@ -10,15 +10,21 @@
             hx-target="#associate-table-body" 
             hx-swap="afterbegin"
             hx-on::after-request="if(event.detail.successful) this.reset()"
+			hx-target-error="#any-errors"
         >
             <!-- Gorilla CSRF requires the token to be in the form body -->
             <input type="hidden" name="gorilla.csrf.Token" value="{{ .CSRFToken }}">
 
 			<!-- label class="sr-only" for="inlineFormInpuFirstName">FistName</label -->
-			<input type="text" class="form-control mb-2 mr-sm-2" id="first" placeholder="First Name" name="first" required minlength="2">
+			 <div class="input-group mb-2 mr-sm-2">
+				<input type="text" class="form-control mb-2 mr-sm-2" id="first" placeholder="First Name" name="first" required minlength="2">
+			 </div>
+
 
 			<!-- label class="sr-only" for="inlineFormInpuLastName">LastName</label -->
-			<input type="text" class="form-control mb-2 mr-sm-2" id="last"  placeholder="Last Name"  name="last" required minlength="2">
+			 <div class="input-group mb-2 mr-sm-2">
+				<input type="text" class="form-control mb-2 mr-sm-2" id="last"  placeholder="Last Name"  name="last" required minlength="2">
+			 </div>
 
 			<!-- label class="sr-only" for="inlineFormInputGroupEmail">Email</label -->
 			<div class="input-group mb-2 mr-sm-2">
@@ -36,26 +42,27 @@
 						<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
 					</svg>
 				</span>
-				<input type="text" class="form-control" id="cell" placeholder="Cell" name="cell" aria-label="Cell" aria-describedby="basic-addon1" required required minlength="9" maxlength="9">
+				<input type="text" class="form-control" id="cell" placeholder="Cell" name="cell" required required minlength="9" maxlength="9">
 			</div>
 
 			<!-- label class="sr-only" for="inlineFormInpuLastName">Password</label -->
 			<div class="mb-3">
 				<!-- label class="form-label" for="exampleForm.ControlInput1">Email address</label -->
-				<input type="text" class="form-control" id="inlineFormInputGroupEmail" placeholder="password"   name="password" aria-describedby="basic-addon1" required>
-				<small class="text-muted form-text">8-20 characters long, at least one letters, number, special characters; no spaces nor emojis.</small>
+				<input type="text" class="form-control" id="inlineFormInputGroupEmail" placeholder="password" name="password" required  minlength="8" maxlength="12">
+				<small class="text-muted form-text">8-12 characters long, at least one letters, number, special characters; no spaces nor emojis.</small>
 			</div>
 
 
 			<div class="input-group mb-2 mr-sm-2">
 				<button type="submit" class="btn btn-primary mb-2">Submit</button>
 			</div>
+			<div id="any-errors"></div>
 
         </form>
     </div>
 
     <h3>Existing Associates</h3>
-    <table class="user-table">
+    <table class="associate-table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -64,7 +71,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id="user-table-body">
+        <tbody id="associate-table-body">
             {{ range .Associates }}
                 {{ template "partials/associates/associate-row" . }}
             {{ end }}

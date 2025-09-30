@@ -1,8 +1,9 @@
 <tr id="associate-{{ .ID }}">
-    <td>{{ .ID }}</td>
-    <td>{{ .Name }}</td>
+     <td>{{ .First }}</td>
+    <td>{{ .Last }}</td>
     <td>{{ .Email }}</td>
-    <td>
+    <td>{{ .Cell }}</td>
+     <td>
         <button 
             class="btn-delete"
             hx-delete="/associates/{{ .ID }}"

@@ -31,7 +31,7 @@ func (uc *AssociatesController) ListAssociates(c *fiber.Ctx) error {
 	}, "layouts/base")
 }
 
-func (uc *AssociatesController) addAssociate(c *fiber.Ctx) error {
+func (uc *AssociatesController) AddAssociate(c *fiber.Ctx) error {
 	var associate Associate
 	log.Println("Adding associate")
 	if err := c.BodyParser(&associate); err != nil {
