@@ -31,9 +31,6 @@ dist/
 out/
 build/
 
-# Ignore environment files
-.env*
-
 # Ignore VSCode settings
 .vscode/
 
@@ -86,10 +83,9 @@ coverage.txt
 tmp/
 tmp/main
 
-# Ignore environmental configuration files
-.env
-*.env
-
 # // 追記
 /yarn.lock
 tmp/main
+fiber.sqlite3
+cmd/web/fiber.sqlite3
+

@@ -21,6 +21,7 @@ import (
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/auth"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/home"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/users"
+	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/associates"
 )
 
 type Server struct {
@@ -115,6 +116,7 @@ func RegisterRoutes(router fiber.Router, db *gorm.DB, store *session.Store) {
 	api := router.Group("/")
 	home.RegisterRoutes(api)
 	users.RegisterRoutes(api, db)
+	associates.RegisterRoutes(api, db)
 	auth.RegisterRoutes(api, db, store)
 }
 

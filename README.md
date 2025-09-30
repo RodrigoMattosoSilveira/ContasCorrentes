@@ -327,6 +327,13 @@ These actors identify the roles and authorizarions that the system will support:
 
 **`Well`** - an area where associates perform tasks to extract gold; the employer currently operates x week;
 
-
-
-
+# Links
+[Client-side form validation](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation)
+[HTMX](https://htmx.org/docs/)
+[Bootstrap forms](https://getbootstrap.com/docs/5.3/forms/layout/)
+[Bootstrap Icons](https://icons.getbootstrap.com/)
+[Form Controls for Mobiles](https://phoenix-react-alt.prium.me/modules/forms/form-control)
+[Bootstrap Validation](https://getbootstrap.com/docs/5.0/forms/validation/)
+[How to Create a Full-Stack Boilerplate with Go, Fiber, and HTMX](https://medium.com/@ahsanmubariz/how-to-create-a-full-stack-boilerplate-with-go-fiber-and-htmx-6012452aaa96), [github](https://github.com/ahsanmubariz/go_htmx_fiber_boilerplate)
+[Understanding Web Project Folder Structure](https://medium.com/@mohitkhubchandani88/understanding-web-project-folder-structure-6cc7ae62fb40)
+[HTMX Error Handling](https://github.com/bigskysoftware/htmx/blob/master/www/content/extensions/response-targets.md)

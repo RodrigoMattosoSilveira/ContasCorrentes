@@ -44,7 +44,9 @@ func LoadConfig() (*Config, error) {
 
 func getEnv(key, fallback string) string {
 	if value, exists := os.LookupEnv(key); exists {
+		os.Setenv(key, value)
 		return value
 	}
+	os.Setenv(key, fallback)
 	return fallback
 }
