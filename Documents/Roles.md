@@ -1,0 +1,17 @@
+# Roles
+- Administrator
+- Associate
+  - Daily
+  - Salary
+  - Commissioned
+- Current Account System
+- Mercantile Manager
+- Mercantile Operator
+- Manager
+  - Facility
+    - Mercantile
+    - Operations
+      - Production
+- Planer
+  - Flight
+  - Period
