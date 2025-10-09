@@ -13,30 +13,30 @@ type Config struct {
 	DSN        string
 	CSRFSecret string
 	SessionKey string
+	JWTKey	 	string
 }
 
 func LoadConfig() (*Config, error) {
-	if os.Getenv("APP_ENV") != "production" {
-		if err := godotenv.Load(); err != nil {
-			log.Println("Error loading .env file")
-		}
-	}
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
-		getEnv("DB_HOST", "localhost"),
-		getEnv("DB_USER", "sqlite"),
-		getEnv("DB_PASSWORD", "password"),
-		getEnv("DB_NAME", "/private/var/ContasCorrentes/sqlite_dev.db"),
-		getEnv("DB_PORT", "5432"),
-		getEnv("DB_SSLMODE", "disable"),
-	)
+   err := godotenv.Load(".env")
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
+   err = godotenv.Load(".env.secrets")
+    if err != nil {
+        log.Fatal("Error loading .env.secrets file")
+    }
+
+	dsn := fmt.Sprintf("dbname=%s", getEnv("DB_NAME", "/private/var/ContasCorrentes/sqlite_dev.db"))
 
 	cfg := &Config{
 		Env:        getEnv("APP_ENV", "development"),
 		Port:       getEnv("APP_PORT", "8080"),
 		DSN:        dsn,
 		CSRFSecret: getEnv("CSRF_SECRET", "default-secret-must-be-32-chars-long"),
-		SessionKey: getEnv("SESSION_KEY", "default-session-key-change-me"),
+		SessionKey: getEnv("SESSION_KEY", "default-secret-must-be-32-chars-long"),
+		JWTKey:     getEnv("JWT_KEY",     "default-secret-must-be-32-chars-long"),
 	}
 
 	return cfg, nil
