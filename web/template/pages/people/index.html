@@ -5,7 +5,7 @@
     <div class="card">
         <h3>Add New Person</h3>
         <form 
-            hx-post="/persons" 
+            hx-post="/people" 
             hx-target="#person-table-body" 
             hx-swap="afterbegin"
             hx-on::after-request="if(event.detail.successful) this.reset()"
@@ -41,7 +41,7 @@
 						<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
 					</svg>
 				</span>
-				<input type="text" class="form-control" id="cell" placeholder="Cell" name="cell" required required minlength="9" maxlength="9">
+				<input type="text" class="form-control" id="cell" placeholder="Cell" name="cell" required required minlength="9" maxlength="10">
 			</div>
 
 			<!-- label class="sr-only" for="inlineFormInpuLastName">Password</label -->
@@ -60,7 +60,7 @@
         </form>
     </div>
 
-    <h3>Existing Associates</h3>
+    <h3>Existing People</h3>
     <!-- table class="person-table" -->
 	<table class="table table-bordered table-hover">
         <thead>
@@ -73,8 +73,8 @@
             </tr>
         </thead>
         <tbody id="person-table-body">
-            {{ range .Associates }}
-                {{ template "partials/persons/person-row" . }}
+            {{ range .People }}
+                {{ template "partials/people/person-row" . }}
             {{ end }}
         </tbody>
     </table>

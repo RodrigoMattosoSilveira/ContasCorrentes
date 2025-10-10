@@ -7,7 +7,7 @@ import (
 var validate *validator.Validate
 
 func InitValidator() {
-	validate = validator.New()
+	validate = validator.New(validator.WithRequiredStructEnabled())
 }
 
 func ValidateStruct(s interface{}) error {
