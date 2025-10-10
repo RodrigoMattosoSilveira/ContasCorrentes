@@ -3,7 +3,7 @@ package auth
 import (
 	"log"
 
-	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/users"
+	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/people"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
@@ -24,7 +24,7 @@ func (ac *AuthController) ShowLoginForm(c *fiber.Ctx) error {
 		"Title":      "Login",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
-		"Username":   c.Locals("Username"),
+		"PersonFirst":   c.Locals("PersonFirst"),
 	}, "layouts/base")
 }
 
@@ -37,8 +37,8 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 		return c.Status(400).SendString("Invalid request")
 	}
 
-	var user users.User
-	if err := ac.db.Where("email = ?", req.Email).First(&user).Error; err != nil {
+	var person people.Person
+	if err := ac.db.Where("email = ?", req.Email).First(&person).Error; err != nil {
 		return c.Status(401).SendString("Invalid credentials")
 	}
 
@@ -47,8 +47,9 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 		return c.Status(500).SendString("Session error")
 	}
 
-	sess.Set("user_id", user.ID)
-	sess.Set("username", user.Name)
+	sess.Set("PersonId", person.ID)
+	sess.Set("PersonFirst", person.First)
+	sess.Set("PersonLast", person.Last)
 
 	if err := sess.Save(); err != nil {
 		log.Printf("ERROR: Failed to save session: %v", err)
@@ -65,8 +66,8 @@ func (ac *AuthController) ShowProfile(c *fiber.Ctx) error {
 		return c.Status(500).SendString("Session error")
 	}
 
-	userID := sess.Get("user_id")
-	if userID == nil {
+	personID := sess.Get("PersonId")
+	if personID == nil {
 		return c.Redirect("/login")
 	}
 
@@ -74,7 +75,8 @@ func (ac *AuthController) ShowProfile(c *fiber.Ctx) error {
 		"Title":      "Your Profile",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
-		"Username":   c.Locals("Username"),
+		"PersonFirst":   sess.Get("PersonFirst"),
+		"PersonLast":    sess.Get("PersonLast"),
 	}, "layouts/base")
 }
 
