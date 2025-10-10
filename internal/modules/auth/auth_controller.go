@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"gorm.io/gorm"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthController struct {
@@ -31,6 +32,7 @@ func (ac *AuthController) ShowLoginForm(c *fiber.Ctx) error {
 func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 	type LoginRequest struct {
 		Email string `form:"email"`
+		Password string `form:"password"`
 	}
 	var req LoginRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -39,8 +41,12 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 
 	var person people.Person
 	if err := ac.db.Where("email = ?", req.Email).First(&person).Error; err != nil {
-		return c.Status(401).SendString("Invalid credentials")
+		return c.Status(401).SendString("Invalid email")
 	}
+
+	if !CheckPasswordHash(person.Password, req.Password) {
+		return c.Status(401).SendString("Invalid password")
+	}	
 
 	sess, err := ac.store.Get(c)
 	if err != nil {
@@ -92,4 +98,9 @@ func (ac *AuthController) HandleLogout(c *fiber.Ctx) error {
 	}
 
 	return c.Redirect("/")
+}
+
+func CheckPasswordHash(hashedPassword, plainPassword string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(plainPassword))
+	return err == nil
 }
