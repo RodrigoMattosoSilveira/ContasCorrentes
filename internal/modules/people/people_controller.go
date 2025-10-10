@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/validator"
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -46,6 +47,12 @@ func (uc *PeopleController) AddPerson(c *fiber.Ctx) error {
 		return c.Status(400).SendString("Validation failed: " + err.Error())
 	}
 
+	hashedPassword, err := HashPassword(person.Password)
+	if err != nil {
+		return c.Status(400).SendString("Failed to hash password:")
+	}
+	person.Password = hashedPassword
+
 	if err := uc.service.CreatePerson(&person); err != nil {
 		log.Println("PeopleController - Unable to add record to database", err)
 		return c.Status(500).SendString("Error creating Person")
@@ -65,4 +72,9 @@ func (uc *PeopleController) DeletePerson(c *fiber.Ctx) error {
 	}
 
 	return c.SendString("")
+}
+
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(bytes), err
 }
