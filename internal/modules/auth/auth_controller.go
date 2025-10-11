@@ -16,6 +16,10 @@ type AuthController struct {
 	store *session.Store
 }
 
+type LoginMessage struct {
+	Message string
+}
+		
 func NewAuthController(db *gorm.DB, store *session.Store) *AuthController {
 	return &AuthController{db: db, store: store}
 }
@@ -30,27 +34,36 @@ func (ac *AuthController) ShowLoginForm(c *fiber.Ctx) error {
 }
 
 func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
+	messageLogin := LoginMessage{}
 	type LoginRequest struct {
 		Email string `form:"email"`
 		Password string `form:"password"`
 	}
 	var req LoginRequest
 	if err := c.BodyParser(&req); err != nil {
-		return c.Status(400).SendString("Invalid request")
+		// return c.Status(400).SendString("Invalid request")
+		messageLogin.Message = "Invalid Request"
+		return c.Render("partials/auth/authMessage", messageLogin)
 	}
 
 	var person people.Person
 	if err := ac.db.Where("email = ?", req.Email).First(&person).Error; err != nil {
-		return c.Status(401).SendString("Invalid email")
+		// return c.Status(401).SendString("Invalid email")
+		messageLogin.Message = "Invalid user name"
+		return c.Render("partials/auth/authMessage", messageLogin)
 	}
 
 	if !CheckPasswordHash(person.Password, req.Password) {
-		return c.Status(401).SendString("Invalid password")
+		// return c.Status(401).SendString("Invalid password")
+		messageLogin.Message = "Invalid user password"
+		return c.Render("partials/auth/authMessage", messageLogin)
 	}	
 
 	sess, err := ac.store.Get(c)
 	if err != nil {
-		return c.Status(500).SendString("Session error")
+		// return c.Status(500).SendString("Session error")
+		messageLogin.Message = "Session error"
+		return c.Render("partials/auth/authMessage", messageLogin)
 	}
 
 	sess.Set("PersonId", person.ID)
@@ -59,7 +72,9 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 
 	if err := sess.Save(); err != nil {
 		log.Printf("ERROR: Failed to save session: %v", err)
-		return c.Status(500).SendString("Failed to save session")
+		// return c.Status(500).SendString("Failed to save session")
+		messageLogin.Message = "Failed to save session"
+		return c.Render("partials/auth/authMessage", messageLogin)
 	}
 
 	c.Set("HX-Redirect", "/profile")
