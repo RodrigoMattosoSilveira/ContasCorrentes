@@ -2,13 +2,16 @@ package auth
 
 import (
 	"log"
+	"os"
+	"time"
 
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/people"
+	"github.com/golang-jwt/jwt/v5"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
-	"gorm.io/gorm"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type AuthController struct {
@@ -76,8 +79,36 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 		messageLogin.Message = "Failed to save session"
 		return c.Render("partials/auth/authMessage", messageLogin)
 	}
-
 	c.Set("HX-Redirect", "/profile")
+
+    // Generate JWT token
+    claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"username": person.First + " " + person.Last,
+		"user_id": person.Email,
+		"role": "Associate",
+   		"iss": "ContasCorrentes",     
+        "exp": 1000 * 60 * 60 * 6 + time.Now().Unix(), // 6 hours\
+    	"iat": time.Now().Unix(),
+    })
+
+    secretKey := os.Getenv("JWT_KEY")
+    token, err := claims.SignedString([]byte(secretKey))
+    if err != nil {
+		// return c.SendStatus(fiber.StatusInternalServerError)
+		messageLogin.Message = "Fiber Internal Server Error"
+		return c.Render("partials/auth/authMessage", messageLogin)
+    }
+
+	// Create jwt cookie
+	cookie := new(fiber.Cookie)
+	cookie.Name = "cc_auth"
+	cookie.Value =  token
+	cookie.MaxAge = 1000*60*60*6 // 6 hours
+	cookie.HTTPOnly = true
+	cookie.Secure = false
+	cookie.SameSite = "Lax"
+	c.Cookie(cookie)
+
 	return c.SendStatus(200)
 }
 
