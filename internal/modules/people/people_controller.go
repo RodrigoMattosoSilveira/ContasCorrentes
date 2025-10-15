@@ -62,6 +62,12 @@ func (uc *PeopleController) AddPerson(c *fiber.Ctx) error {
 }
 
 func (uc *PeopleController) DeletePerson(c *fiber.Ctx) error {
+	claimData := c.Locals("jwtClaims")
+
+	if claimData == nil {
+		return c.SendString("Jwt was bypassed")
+	}
+
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).SendString("Invalid ID")

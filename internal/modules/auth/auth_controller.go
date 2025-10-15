@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/people"
+	constants "github.com/RodrigoMattosoSilveira/ContasCorrentes/constants"
 	"github.com/golang-jwt/jwt/v5"
 
 	"github.com/gofiber/fiber/v2"
@@ -87,7 +88,7 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 		"user_id": person.Email,
 		"role": "Associate",
    		"iss": "ContasCorrentes",     
-        "exp": 1000 * 60 * 60 * 6 + time.Now().Unix(), // 6 hours\
+        "exp": 60 * 60 * 6 + time.Now().Unix(), // 6 hours from now
     	"iat": time.Now().Unix(),
     })
 
@@ -101,12 +102,12 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 
 	// Create jwt cookie
 	cookie := new(fiber.Cookie)
-	cookie.Name = "cc_auth"
+	cookie.Name = constants.COOKIE_NAME
 	cookie.Value =  token
 	cookie.MaxAge = 1000*60*60*6 // 6 hours
 	cookie.HTTPOnly = true
 	cookie.Secure = false
-	cookie.SameSite = "Lax"
+	cookie.SameSite = "Secure"
 	c.Cookie(cookie)
 
 	return c.SendStatus(200)
