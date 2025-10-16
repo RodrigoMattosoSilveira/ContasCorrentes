@@ -2,13 +2,15 @@ package middleware
 
 import (
 	"errors"
+	"fmt"
 	"log"
+	"net/url"
 	"os"
 	"time"
 
+	constants "github.com/RodrigoMattosoSilveira/ContasCorrentes/constants"
 	"github.com/gofiber/fiber/v2"
 	jwt "github.com/golang-jwt/jwt/v5"
-	constants "github.com/RodrigoMattosoSilveira/ContasCorrentes/constants"
 )
 
 /*
@@ -23,7 +25,7 @@ type Config struct {
 	Filter         func(c *fiber.Ctx) bool
 
 	// function to run when there is error decoding jwt
-	Unauthorized fiber.Handler
+	Unauthorized  func(c *fiber.Ctx) error
 
 	// function to decode our jwt token
 	Decode       func(c *fiber.Ctx) (*jwt.MapClaims, error)
@@ -77,32 +79,14 @@ func configDefault(config ...Config) Config {
 		cfg.Expiry = ConfigDefault.Expiry
 	}
 
-        // this is the main jwt decode function of our middleware
+	if cfg.Unauthorized == nil {
+		cfg.Unauthorized = Unauthorized
+	}
+
+    // this is the main jwt decode function of our middleware
 	if cfg.Decode == nil {
 		// Set default Decode function if not passed
 		cfg.Decode = func(c *fiber.Ctx) (*jwt.MapClaims, error) {
-
-			// authHeader := c.Get("Authorization")
-
-			// if authHeader == "" {
-			// 	return nil, errors.New("Authorization header is required")
-			// }
-                        
-            //             // we parse our jwt token and check for validity against our secret
-			// token, err := jwt.Parse(
-			// 	authHeader[7:],
-			// 	func(token *jwt.Token) (interface{}, error) {
-			// 		// verifying our algo
-			// 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			// 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-			// 		}
-			// 		return []byte(cfg.Secret), nil
-			// 	},
-			// )
-
-			// if err != nil {
-			// 	return nil, errors.New("Error parsing token")
-			// }
 
 			// Retrieve JWT token from cookie
 			cookie := c.Cookies(constants.COOKIE_NAME) // Replace "jwt" with your actual cookie name if different
@@ -202,3 +186,13 @@ func New(config Config) fiber.Handler {
 		return cfg.Unauthorized(c)
 	}
 }
+
+func Unauthorized(ctx *fiber.Ctx) error {
+	hxTarget := url.PathEscape("#authenticationError")
+	hxSwap := "beforeend"
+	url := fmt.Sprintf("/authorizationError?hx-target=%s&hx-swap=%s", hxTarget, hxSwap)
+	log.Println("Query Params:", url) // Log the full URL with query params
+	ctx.Set("HX-Location",url)
+	//  return ctx.SendStatus(200)
+	return ctx.SendString("Redirecting with HX-Location")
+}	

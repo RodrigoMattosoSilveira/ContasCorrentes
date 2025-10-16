@@ -9,6 +9,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	jwt "github.com/golang-jwt/jwt/v5"
+	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/middleware"
 )
 
 type PeopleController struct {
@@ -72,7 +73,9 @@ func (uc *PeopleController) DeletePerson(c *fiber.Ctx) error {
 
 	role := claims.(jwt.MapClaims)["role"]
 	if role != "Admin" {
-		return c.Status(403).SendString("Only Admin users can delete people")
+		// return c.Status(403).SendString("Only Admin users can delete people")
+		middleware.Unauthorized(c)
+		return c.Status(403).SendString("Unthorized: Only Adminstrators can delete people")
 	}
 
 	id, err := c.ParamsInt("id")

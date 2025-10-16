@@ -133,6 +133,21 @@ func (ac *AuthController) ShowProfile(c *fiber.Ctx) error {
 	}, "layouts/base")
 }
 
+func (ac *AuthController) AuthorizationError(c *fiber.Ctx) error {
+	// sess, err := ac.store.Get(c)
+	// if err != nil {
+	// 	return c.Status(500).SendString("Session error")
+	// }
+	log.Println("Query Params:", c.OriginalURL()) // Log the full URL with query params
+
+	return c.Render("pages/auth/authorizationError", fiber.Map{
+		"Title":      "Authorization Error",
+		"CSRFToken":  c.Locals("CSRFToken"),
+		"IsLoggedIn": c.Locals("IsLoggedIn"),
+
+	}, "layouts/base")
+}
+
 func (ac *AuthController) HandleLogout(c *fiber.Ctx) error {
 	sess, err := ac.store.Get(c)
 	if err != nil {
