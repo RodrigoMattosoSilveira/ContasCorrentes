@@ -13,4 +13,5 @@ func RegisterRoutes(router fiber.Router, db *gorm.DB, store *session.Store) {
 	router.Post("/login", controller.HandleLogin)
 	router.Get("/logout", controller.HandleLogout)
 	router.Get("/profile", controller.ShowProfile)
+	router.Get("/authorizationError", controller.AuthorizationError)
 }

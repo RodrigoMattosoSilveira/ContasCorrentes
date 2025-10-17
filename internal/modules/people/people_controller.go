@@ -3,10 +3,13 @@ package people
 import (
 	"log"
 
+	"github.com/RodrigoMattosoSilveira/ContasCorrentes/constants"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/validator"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/gofiber/fiber/v2"
+	jwt "github.com/golang-jwt/jwt/v5"
+	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/middleware"
 )
 
 type PeopleController struct {
@@ -62,6 +65,19 @@ func (uc *PeopleController) AddPerson(c *fiber.Ctx) error {
 }
 
 func (uc *PeopleController) DeletePerson(c *fiber.Ctx) error {
+	claims := c.Locals(constants.JWT_CLAIMS)
+
+	if claims == nil {
+		return c.SendString("Jwt was bypassed")
+	}
+
+	role := claims.(jwt.MapClaims)["role"]
+	if role != "Admin" {
+		// return c.Status(403).SendString("Only Admin users can delete people")
+		middleware.Unauthorized(c)
+		return c.Status(403).SendString("Unthorized: Only Adminstrators can delete people")
+	}
+
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).SendString("Invalid ID")
