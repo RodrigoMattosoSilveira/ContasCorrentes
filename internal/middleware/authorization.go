@@ -2,9 +2,7 @@ package middleware
 
 import (
 	"errors"
-	"fmt"
 	"log"
-	"net/url"
 	"os"
 	"time"
 
@@ -188,11 +186,7 @@ func New(config Config) fiber.Handler {
 }
 
 func Unauthorized(ctx *fiber.Ctx) error {
-	hxTarget := url.PathEscape("#authenticationError")
-	hxSwap := "beforeend"
-	url := fmt.Sprintf("/authorizationError?hx-target=%s&hx-swap=%s", hxTarget, hxSwap)
-	log.Println("Query Params:", url) // Log the full URL with query params
-	ctx.Set("HX-Location",url)
-	//  return ctx.SendStatus(200)
-	return ctx.SendString("Redirecting with HX-Location")
+	log.Println("Unauthorized, Query Params:", ctx.OriginalURL()) // Log the full URL with query params
+	ctx.Set("HX-Trigger", "unauthorized")
+	return ctx.SendString("Triggering with HX-Trigger")
 }	

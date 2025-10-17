@@ -154,7 +154,7 @@
     <footer>
         <p>&copy; 2025 Madrone Logistics</p>
     </footer>
-     <div id="authenticationError"></div>
+     <div hx-trigger="unauthorized from:body" hx-get="/authorizationError" hx-target="body" hx-swap="beforeend">Open a Modal</div>
      <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx-ext-response-targets@2.0.2" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.14"></script>    
