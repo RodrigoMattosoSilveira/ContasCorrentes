@@ -1,13 +1,12 @@
 
 
-Introduction
+# Introduction
 
 Here's the complete wireframe for our Sign-Up flow:
 ![alt text](sign-up-flow-full-picture-lg.png)
 
-Sign up Form
-
-
+# Sign up Form
+![Signup Landing](sign-up-flow-landing.png)
 
 Here are some of the tricks used on this design:
 - The login and sign-up features are visually very different — one is a link, the other is a form. This makes sure people won't confuse the two.
@@ -16,11 +15,9 @@ Here are some of the tricks used on this design:
   
   Together they make quite a difference, don't you think?
 
-Username and password authentication
-
-
+# Username and password authentication
 Let's start with the most common authentication method: username and password. You've already asked the user for their email on the landing page, now it's time to ask them a little more info. Once your prospect clicks on Start Trial on the landing page, this dialog pops up:
-
+![alt text](sign-up-flow-u1.png)
 
 There are a lot of micro-interactions here that are worth exploring:
 
@@ -38,30 +35,29 @@ There are a lot of micro-interactions here that are worth exploring:
 - There is a "Continue" button, that stays disabled until all the fields are filled in correctly.
 - There is also a "Resend Verification Email" link, in case they never got the email and want to try again. This is a good spot to hide this link, because this is where they entered their email address in the first place, so they should be able to find it again while they scramble to try and complete the sign-up process.
 
-Email Verification
+# Email Verification
 
 Unfortunately, you can't just create their user account now and let them in. You have to make sure they can receive your emails. This is critical, because that's how they'll be able to reset their password if they need to, and how you'll send them important communications about their account.
 
 In the past, several web apps would let users in while the email got confirmed, but it's confusing — you have to add the concept of "unverified user", which makes everything harder. It also has security implications: I could sign-up with your email address, and thus prevent you from doing so in the future!
 
 
-Instead, most web apps now make confirming the email an integral part of the sign-up flow, like this:
+## Instead, most web apps now make confirming the email an integral part of the sign-up flow, like this:
+
+![Confirm Email Notice](sign-up-flow-u2.png)
 
 
 
-
-
-
-The Resend Verification Email dialog
-
+## The Resend Verification Email dialog
+![Resend Verification Email dialog](sign-up-flow-u1b.png)
 
 
 Nice and simple: you pre-fill the email with what they typed before, you put focus on the Email field, and when they confirm you show them the email address, and give them an easy way to contact support in case they're stuck.
 
-Back to the main flow: Time to check email!
+## Back to the main flow: Time to check email!
 
 First of all, you need to make sure your back-end system ensures a very high level of deliverability and speed for transactional emails. This is much easier said than done, so we rely on Postmark for this.
-
+![Confirm Email Notice](sign-up-flow-u3.png)
 
 Let's look at the anatomy of this email message:
 
@@ -71,12 +67,12 @@ Let's look at the anatomy of this email message:
 - It shows the verify URL both as a button and as a link. This is useful for old email clients, or if people need to copy/paste the link instead of clicking (it happens more than you'd think).
 - In the footer, it tells people what your product does and how to contact support. This is mostly useful if someone receives this email by accident, but it also provides some context, and shows that you're approachable and happy to support them.
 
-Almost there: Confirm with a login
+## Almost there: Confirm with a login
 
 Once the user clicks on the Verify Account button or link, they're almost done!
 Again, you can't just create their account quite yet, it's not secure. Instead, show them a login screen like this one:
 
-
+![Login](sign-up-flow-u4.png)
 
 A few things to notice:
 - The title says "Please login to Complete Email Verification", which ties the login to the email they just clicked on.
@@ -86,7 +82,7 @@ A few things to notice:
 - As usual, the button is disabled until the form fields are filled in correctly.
 
 Once they login correctly, you can finally create their user account in your database, and let them in
+![Landing Page](sign-up-flow-u5.png)
 
-
-References
-source
+# References
+[Balsamiq](https://balsamiq.com/blog/sign-up-flow/)
