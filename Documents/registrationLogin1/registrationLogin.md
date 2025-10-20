@@ -3,7 +3,7 @@
 Introduction
 
 Here's the complete wireframe for our Sign-Up flow:
-[text](registrationLogin.md)
+[text](./registrationLogin.md)
 
 Sign up Form
 
