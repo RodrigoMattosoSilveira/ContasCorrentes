@@ -3,7 +3,7 @@
 Introduction
 
 Here's the complete wireframe for our Sign-Up flow:
-[text](./registrationLogin.md)
+![alt text](sign-up-flow-full-picture-lg.png)
 
 Sign up Form
 
