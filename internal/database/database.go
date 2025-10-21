@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/config"
-	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/associates"
-	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/users"
+	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/people"
+
 
 	"fmt"
 	"log/slog"
@@ -32,11 +32,7 @@ func InitDatabase(cfg *config.Config) (*gorm.DB, error) {
 
 func RunMigrations(db *gorm.DB) error {
 	log.Println("Running database migrations...")
-	err := db.AutoMigrate(&users.User{})
-	if err != nil {
-		return err
-	}
-	err = db.AutoMigrate(&associates.Associate{})
+	err := db.AutoMigrate(&people.Person{})
 	if err != nil {
 		return err
 	}

@@ -20,8 +20,6 @@ import (
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/config"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/auth"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/home"
-	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/users"
-	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/associates"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/people"
 )
 
@@ -116,8 +114,6 @@ func NewServer(cfg *config.Config, db *gorm.DB) *Server {
 func RegisterRoutes(router fiber.Router, db *gorm.DB, store *session.Store) {
 	api := router.Group("/")
 	home.RegisterRoutes(api)
-	users.RegisterRoutes(api, db)
-	associates.RegisterRoutes(api, db)
 	people.RegisterRoutes(api, db)
 	auth.RegisterRoutes(api, db, store)
 }
