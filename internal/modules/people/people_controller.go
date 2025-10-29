@@ -24,7 +24,7 @@ func NewPeopleController(service *PeopleService) *PeopleController {
 func (uc *PeopleController) ListPeople(c *fiber.Ctx) error {
 	People, err := uc.service.GetAllPeople()
 	if err != nil {
-		return c.Status(500).SendString("Error fetching assopciates")
+		return c.Status(500).SendString("Error fetching associates")
 	}
 
 	return c.Render("pages/people/index", fiber.Map{
