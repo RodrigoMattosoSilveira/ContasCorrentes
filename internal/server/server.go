@@ -14,14 +14,13 @@ import (
 	"github.com/gofiber/helmet/v2"
 	"github.com/gofiber/storage/sqlite3/v2"
 	"github.com/gofiber/template/html/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gorilla/csrf"
 	"gorm.io/gorm"
 
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/config"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/auth"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/home"
-	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/users"
-	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/associates"
 	"github.com/RodrigoMattosoSilveira/ContasCorrentes/internal/modules/people"
 )
 
@@ -41,6 +40,9 @@ func NewServer(cfg *config.Config, db *gorm.DB) *Server {
 	internalApp := fiber.New(fiber.Config{
 		Views: engine,
 	})
+	internalApp.Use(cors.New(cors.Config{
+		AllowHeaders: "Hx-Trigger",
+	}))
 
 	storage := sqlite3.New(sqlite3.Config{
 		Database:        "./fiber.sqlite3",
@@ -105,6 +107,9 @@ func NewServer(cfg *config.Config, db *gorm.DB) *Server {
 	publicApp.Static("/", "./public")
 	// All requests to the public app are passed to our http handler chain.
 	publicApp.All("/*", adaptor.HTTPHandler(finalHandler))
+	publicApp.Use(cors.New(cors.Config{
+   		AllowHeaders: "Origin, Content-Type, Accept, Hx-Trigger",
+	}))
 
 	return &Server{
 		App: publicApp, // We return the public-facing app to main.go
@@ -116,8 +121,6 @@ func NewServer(cfg *config.Config, db *gorm.DB) *Server {
 func RegisterRoutes(router fiber.Router, db *gorm.DB, store *session.Store) {
 	api := router.Group("/")
 	home.RegisterRoutes(api)
-	users.RegisterRoutes(api, db)
-	associates.RegisterRoutes(api, db)
 	people.RegisterRoutes(api, db)
 	auth.RegisterRoutes(api, db, store)
 }

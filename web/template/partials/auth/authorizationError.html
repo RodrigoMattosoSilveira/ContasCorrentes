@@ -1,10 +1,10 @@
-<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+<dialog id="modal" _="on closeModal add .closing then wait for animationend then remove me">
 	<div class="modal-underlay" _="on click trigger closeModal"></div>
 	<div class="modal-content">
-		<h1>Authorization Error</h1>
-		You are not authorized to access this resource.
+		<h4>Error: {{ .Status}}</h4>
+		<p>{{ .Error }}</p>
 		<br>
 		<br>
-		<button class="btn danger" _="on click trigger closeModal">Close</button>
+		<button type="button" class="btn danger" _="on click trigger closeModal">Close</button>
 	</div>
-</div>
+</dialog>

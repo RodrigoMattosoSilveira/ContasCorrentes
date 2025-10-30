@@ -71,8 +71,7 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 	}
 
 	sess.Set("PersonId", person.ID)
-	sess.Set("PersonFirst", person.First)
-	sess.Set("PersonLast", person.Last)
+	sess.Set("PersonName", person.Name)
 
 	if err := sess.Save(); err != nil {
 		log.Printf("ERROR: Failed to save session: %v", err)
@@ -84,7 +83,7 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 
     // Generate JWT token
     claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": person.First + " " + person.Last,
+		"username": person.Name,
 		"user_id": person.Email,
 		"role": "Associate",
    		"iss": "ContasCorrentes",     

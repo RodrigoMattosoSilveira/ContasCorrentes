@@ -88,6 +88,11 @@ func configDefault(config ...Config) Config {
 
 			// Retrieve JWT token from cookie
 			cookie := c.Cookies(constants.COOKIE_NAME) // Replace "jwt" with your actual cookie name if different
+			if cookie == "" {
+				c.Locals("AuthenticationErrorText", "Authentication cookie not found. Please log in again.")
+				c.Locals("AuthenticationError", "Authentication cookie not found. Please log in again.")
+				return nil, errors.New("cookie not found")
+			}
 
 			// Parse JWT token with claims
 			secretKey := os.Getenv("JWT_KEY")
@@ -98,7 +103,8 @@ func configDefault(config ...Config) Config {
 				// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 				return []byte(secretKey), nil
 			}, jwt.WithValidMethods([]string{jwt.SigningMethodHS256.Alg()}))			// Handle token parsing errors
-			if err != nil {
+			if err != nil {		
+				c.Locals("AuthenticationErrorText", "Invalid authentication token. Please log in again.")
 				return nil, c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 					"error": "Unauthorized",
 				})
@@ -111,6 +117,7 @@ func configDefault(config ...Config) Config {
 			}
 
 			if expiresAt, ok := claims["exp"]; ok && int64(expiresAt.(float64)) < time.Now().UTC().Unix() {
+				c.Locals("AuthenticationErrorText", "Authentication cookieexpired. Please log in again.")
 				return nil, errors.New("jwt is expired")
 			}
 
@@ -187,6 +194,24 @@ func New(config Config) fiber.Handler {
 
 func Unauthorized(ctx *fiber.Ctx) error {
 	log.Println("Unauthorized, Query Params:", ctx.OriginalURL()) // Log the full URL with query params
-	ctx.Set("HX-Trigger", "unauthorized")
-	return ctx.SendString("Triggering with HX-Trigger")
-}	
+	log.Println("Unauthorized, Error:", ctx.Locals("AuthenticationErrorText")) // Log the specific error message
+	// return ctx.Status(fiber.StatusUnauthorized).Render("pages/auth/login", fiber.Map{
+	// 	"Title":      "Login",
+	// 	"CSRFToken":  ctx.Locals("CSRFToken"),
+	// 	"IsLoggedIn": ctx.Locals("IsLoggedIn"),
+	// 	"PersonFirst":   ctx.Locals("PersonFirst"),
+	// }, "layouts/base")
+
+	// Trigger a dialog_event in the server!
+	ctx.Set("HX-Retarget", "#server-dialog-container")
+	ctx.Set("HX-Reswap", "beforeend")
+	ctx.Set("HX-Trigger", "dialog_event")
+	// return ctx.Status(fiber.StatusUnauthorized).Render("partials/auth/authorizationErrorModal",  fiber.Map{
+	return ctx.Render("partials/auth/authorizationErrorModal",  fiber.Map{
+		"title":       "Authorization Error",
+		"Status":      fiber.StatusUnauthorized,
+		"body":       ctx.Locals("AuthenticationErrorText"),
+		"CSRFToken":   ctx.Locals("CSRFToken"),
+		"IsLoggedIn":  ctx.Locals("IsLoggedIn"),
+		"PersonName":  ctx.Locals("PersonName")})
+}
