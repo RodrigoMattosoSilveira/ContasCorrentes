@@ -195,8 +195,6 @@ func New(config Config) fiber.Handler {
 func Unauthorized(ctx *fiber.Ctx) error {
 	log.Println("Unauthorized, Query Params:", ctx.OriginalURL()) // Log the full URL with query params
 	log.Println("Unauthorized, Error:", ctx.Locals("AuthenticationErrorText")) // Log the specific error message
-	ctx.Append("HX-Retarget ", "body")
-	ctx.Append("HX-Reswap", "beforeend")
 	// return ctx.Status(fiber.StatusUnauthorized).Render("pages/auth/login", fiber.Map{
 	// 	"Title":      "Login",
 	// 	"CSRFToken":  ctx.Locals("CSRFToken"),
@@ -204,13 +202,16 @@ func Unauthorized(ctx *fiber.Ctx) error {
 	// 	"PersonFirst":   ctx.Locals("PersonFirst"),
 	// }, "layouts/base")
 
-
-	return ctx.Status(fiber.StatusUnauthorized).Render("partials/auth/authorizationError", fiber.Map{
-		"Title":       "Authorization Error",
+	// Trigger a dialog_event in the server!
+	ctx.Set("HX-Retarget", "#server-dialog-container")
+	ctx.Set("HX-Reswap", "beforeend")
+	ctx.Set("HX-Trigger", "dialog_event")
+	// return ctx.Status(fiber.StatusUnauthorized).Render("partials/auth/authorizationErrorModal",  fiber.Map{
+	return ctx.Render("partials/auth/authorizationErrorModal",  fiber.Map{
+		"title":       "Authorization Error",
 		"Status":      fiber.StatusUnauthorized,
-		"Error":       ctx.Locals("AuthenticationErrorText"),
+		"body":       ctx.Locals("AuthenticationErrorText"),
 		"CSRFToken":   ctx.Locals("CSRFToken"),
 		"IsLoggedIn":  ctx.Locals("IsLoggedIn"),
-		"PersonName":  ctx.Locals("PersonName"),
-	},"layouts/base")
+		"PersonName":  ctx.Locals("PersonName")})
 }
