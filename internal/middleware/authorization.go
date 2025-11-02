@@ -184,7 +184,7 @@ func New(config Config) fiber.Handler {
 		claims, err := cfg.Decode(c)
 
 		if err == nil {
-			c.Locals("jwtClaims", *claims)
+			c.Locals(constants.JWT_CLAIMS, *claims)
 			return c.Next()
 		}
 
