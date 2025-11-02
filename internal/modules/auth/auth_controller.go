@@ -126,9 +126,9 @@ func (ac *AuthController) ShowProfile(c *fiber.Ctx) error {
 	return c.Render("pages/auth/profile", fiber.Map{
 		"Title":      "Your Profile",
 		"CSRFToken":  c.Locals("CSRFToken"),
-		"IsLoggedIn": c.Locals("IsLoggedIn"),
-		"PersonFirst":   sess.Get("PersonFirst"),
-		"PersonLast":    sess.Get("PersonLast"),
+		"IsLoggedIn":     true,
+		"PersonFirst":    sess.Get("PersonName"),
+		"PersonLast":    sess.Get("PersonEmail"),
 	}, "layouts/base")
 }
 
