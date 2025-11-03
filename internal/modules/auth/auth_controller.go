@@ -82,6 +82,7 @@ func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {
 	c.Set("HX-Redirect", "/profile")
 
     // Generate JWT token
+	// TODO add logic to only pass the Person.ID here
     claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": person.Name,
 		"user_id": person.Email,

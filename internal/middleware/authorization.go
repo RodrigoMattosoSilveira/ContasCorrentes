@@ -109,7 +109,8 @@ func configDefault(config ...Config) Config {
 					"error": "Unauthorized",
 				})
 			}
-
+			
+			// TODO add logic to retrieve the Person.Role here
 			claims, ok := token.Claims.(jwt.MapClaims)
 
 			if !(ok && token.Valid) {
