@@ -141,8 +141,8 @@
     >
 </head>
 <body hx-headers='{"X-CSRF-Token": "{{ .CSRFToken }}"}'>
-    <header>
-        <h1>My Awesome App</h1>
+    <!--header>
+        <h1>Contas Correntes</h1>
         <nav>
             <a href="/">Home</a>
             <a class="nav_a" hx-get="/people">People</a>
@@ -153,7 +153,8 @@
                 <a href="/login">Login</a>
             {{ end }}
         </nav>
-    </header>
+    </header-->
+    {{ template "partials/base/header" .}}
     <main>
         {{embed}}
     </main>

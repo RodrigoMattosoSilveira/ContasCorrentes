@@ -15,6 +15,6 @@ func (h *HomeController) GetIndex(c *fiber.Ctx) error {
 		"Title":      "Welcome to Go + Fiber + HTMX!",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
-		"Username":   c.Locals("Username"),
+		"PersonName":   c.Locals("PersonName"),
 	}, "layouts/base")
 }

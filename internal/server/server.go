@@ -64,8 +64,8 @@ func NewServer(cfg *config.Config, db *gorm.DB) *Server {
 	// THE FIX: This middleware MUST be registered BEFORE the routes.
 	internalApp.Use(func(c *fiber.Ctx) error {
 		sess, _ := store.Get(c)
-		c.Locals("IsLoggedIn", sess.Get("user_id") != nil)
-		c.Locals("Username", sess.Get("username"))
+		c.Locals("IsLoggedIn", sess.Get("PersonId") != nil)
+		c.Locals("PersonName", sess.Get("PersonName"))
 
 		// Read the token from the special header set by our bridge middleware.
 		token := c.Get("X-CSRF-Token-View")

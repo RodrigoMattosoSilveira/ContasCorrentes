@@ -16,7 +16,7 @@ Here are some of the tricks used on this design:
   Together they make quite a difference, don't you think?
 
 # Username and password authentication
-Let's start with the most common authentication method: username and password. You've already asked the user for their email on the landing page, now it's time to ask them a little more info. Once your prospect clicks on Start Trial on the landing page, this dialog pops up:
+Let's start with the most common authentication method: email (former username) and password. You've already asked the user for their email on the landing page, now it's time to ask them a little more info. Once your prospect clicks on Start Trial on the landing page, this dialog pops up:
 ![alt text](sign-up-flow-u1.png)
 
 There are a lot of micro-interactions here that are worth exploring:

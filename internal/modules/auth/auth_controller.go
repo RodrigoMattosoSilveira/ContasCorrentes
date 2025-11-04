@@ -33,7 +33,7 @@ func (ac *AuthController) ShowLoginForm(c *fiber.Ctx) error {
 		"Title":      "Login",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
-		"PersonFirst":   c.Locals("PersonFirst"),
+		"PersonName":   c.Locals("PersonName"),
 	}, "layouts/base")
 }
 
