@@ -6,7 +6,7 @@
       <!--input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"-->
 		<nav class="nav">
 			<a class="nav-link active" aria-current="page" href="/">Home</a>
-			<a class="nav-link" hx-get="/people">People</a>
+			<a class="nav-link" hx-get="/people" hx-target="#mybody" hx-swap="innerHTML">People</a>
 			 {{ if .IsLoggedIn }}
                 <a class="nav-link active" href="/profile">Profile</a>
                 <a class="nav-link active" href="/logout">Logout</a>

@@ -33,7 +33,8 @@ func (ac *AuthController) ShowLoginForm(c *fiber.Ctx) error {
 		"Title":      "Login",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
-		"PersonName":   c.Locals("PersonName"),
+		"PersonName": c.Locals("PersonName"),
+		"Copyright":  "2025 Madrone Logistics",
 	}, "layouts/base")
 }
 
@@ -125,11 +126,11 @@ func (ac *AuthController) ShowProfile(c *fiber.Ctx) error {
 	}
 
 	return c.Render("pages/auth/profile", fiber.Map{
-		"Title":      "Your Profile",
-		"CSRFToken":  c.Locals("CSRFToken"),
-		"IsLoggedIn":     true,
-		"PersonFirst":    sess.Get("PersonName"),
-		"PersonLast":    sess.Get("PersonEmail"),
+		"Title":       "Your Profile",
+		"CSRFToken":   c.Locals("CSRFToken"),
+		"IsLoggedIn":  true,
+		"PersonName":  sess.Get("PersonName"),
+		"Copyright":   "2025 Madrone Logistics",
 	}, "layouts/base")
 }
 

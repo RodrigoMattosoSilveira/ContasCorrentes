@@ -29,10 +29,11 @@ func (uc *PeopleController) ListPeople(c *fiber.Ctx) error {
 
 	return c.Render("pages/people/index", fiber.Map{
 		"Title":      "People Management",
-		"People":  People,
+		"People":     People,
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
-		"PersonName":   c.Locals("PersonName"),
+		"PersonName": c.Locals("PersonName"),
+		"Copyright":  "2025 Madrone Logistics",
 	}, "layouts/base")
 }
 

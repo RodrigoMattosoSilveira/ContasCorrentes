@@ -211,8 +211,10 @@ func Unauthorized(ctx *fiber.Ctx) error {
 	return ctx.Render("partials/auth/authorizationErrorModal",  fiber.Map{
 		"title":       "Authorization Error",
 		"Status":      fiber.StatusUnauthorized,
-		"body":       ctx.Locals("AuthenticationErrorText"),
+		"body":        ctx.Locals("AuthenticationErrorText"),
 		"CSRFToken":   ctx.Locals("CSRFToken"),
 		"IsLoggedIn":  ctx.Locals("IsLoggedIn"),
-		"PersonName":  ctx.Locals("PersonName")})
+		"PersonName":  ctx.Locals("PersonName"),
+		"Copyright":   "2025 Madrone Logistics",
+	})
 }
