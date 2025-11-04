@@ -15,3 +15,9 @@
 - Planer
   - Flight
   - Period
+
+- Kiss
+  - Person - Can see and update their own data;
+  - Operator - Can perform  basic planning, mercantile, well operations
+  - Administrator - Can perform  administrative planning, mercantile, well operations
+  - System - Can add a new system administrator
