@@ -29,13 +29,20 @@ func NewAuthController(db *gorm.DB, store *session.Store) *AuthController {
 }
 
 func (ac *AuthController) ShowLoginForm(c *fiber.Ctx) error {
-	return c.Render("pages/auth/login", fiber.Map{
+	// return c.Render("pages/auth/login", fiber.Map{
+	// 	"Title":      "Login",
+	// 	"CSRFToken":  c.Locals("CSRFToken"),
+	// 	"IsLoggedIn": c.Locals("IsLoggedIn"),
+	// 	"PersonName": c.Locals("PersonName"),
+	// 	"Copyright":  "2025 Madrone Logistics",
+	// }, "layouts/base")
+	return c.Render("layouts/base", fiber.Map{
 		"Title":      "Login",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
 		"PersonName": c.Locals("PersonName"),
 		"Copyright":  "2025 Madrone Logistics",
-	}, "layouts/base")
+	}, )
 }
 
 func (ac *AuthController) HandleLogin(c *fiber.Ctx) error {

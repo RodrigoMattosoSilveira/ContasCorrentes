@@ -27,14 +27,14 @@ func (uc *PeopleController) ListPeople(c *fiber.Ctx) error {
 		return c.Status(500).SendString("Error fetching associates")
 	}
 
-	return c.Render("pages/people/index", fiber.Map{
+	return c.Render( "layouts/base", fiber.Map{
 		"Title":      "People Management",
 		"People":     People,
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
 		"PersonName": c.Locals("PersonName"),
 		"Copyright":  "2025 Madrone Logistics",
-	}, "layouts/base")
+	},)
 }
 
 func (uc *PeopleController) AddPerson(c *fiber.Ctx) error {
