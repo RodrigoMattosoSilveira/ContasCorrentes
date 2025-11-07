@@ -9,6 +9,7 @@ import (
 func RegisterRoutes(router fiber.Router, db *gorm.DB, store *session.Store) {
 	controller := NewAuthController(db, store)
 
+	router.Get("/", controller.ShowLoginForm)
 	router.Get("/login", controller.ShowLoginForm)
 	router.Post("/login", controller.HandleLogin)
 	router.Get("/logout", controller.HandleLogout)

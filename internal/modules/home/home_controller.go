@@ -11,7 +11,7 @@ func NewHomeController() *HomeController {
 }
 
 func (h *HomeController) GetIndex(c *fiber.Ctx) error {
-	return c.Render("layouts/base", fiber.Map{
+	return c.Render("pages/auth/login", fiber.Map{
 		"Title":      "Welcome to Go + Fiber + HTMX!",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),

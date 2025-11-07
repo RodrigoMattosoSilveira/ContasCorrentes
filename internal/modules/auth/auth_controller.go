@@ -36,7 +36,7 @@ func (ac *AuthController) ShowLoginForm(c *fiber.Ctx) error {
 	// 	"PersonName": c.Locals("PersonName"),
 	// 	"Copyright":  "2025 Madrone Logistics",
 	// }, "layouts/base")
-	return c.Render("layouts/base", fiber.Map{
+	return c.Render("pages/auth/login", fiber.Map{
 		"Title":      "Login",
 		"CSRFToken":  c.Locals("CSRFToken"),
 		"IsLoggedIn": c.Locals("IsLoggedIn"),
